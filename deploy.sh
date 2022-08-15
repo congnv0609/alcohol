@@ -17,7 +17,7 @@ updateRepo() {
 
     git fetch origin
 
-    git reset --hard origin/test
+    git reset --hard origin/main
 
     # main_branch="master" 
     # if [ "$repo_url" == "https://github.com/Z1ZAC/smoking_CMS.git" ]; then # if you have a repo where the primary branch isnt master
@@ -59,14 +59,14 @@ done
 
 echo "$count local git repos have been updated!"
 
-echo "Copy files from git local to host site"
+# echo "Copy files from git local to host site"
 
-source_directory="/var/www/html/ema-git/"
-des_directory="/var/www/html/ema-smoking"
+# source_directory="/var/www/html/ema-git/"
+# des_directory="/var/www/html/ema-smoking"
 
-rsync -av --exclude={'var/www/html/ema-git/deploy.sh','.git','var/www/html/ema-git/storage','var/www/html/ema-git/public/js','var/www/html/ema-git/public/css','var/www/html/ema-git/public/mix-manifest.json'} $source_directory $des_directory
+# rsync -av --exclude={'var/www/html/ema-git/deploy.sh','.git','var/www/html/ema-git/storage','var/www/html/ema-git/public/js','var/www/html/ema-git/public/css','var/www/html/ema-git/public/mix-manifest.json'} $source_directory $des_directory
 
-cd $des_directory
+# cd $des_directory
 
 #composer install --optimize-autoloader --no-dev
 
@@ -77,6 +77,6 @@ php artisan scribe:generate
 
 systemctl restart supervisord.service
 
-echo "Strarting build SPAs in $PWD"
+echo "Starting build SPAs in $PWD"
 
 npm run production
