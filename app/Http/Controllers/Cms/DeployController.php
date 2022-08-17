@@ -12,6 +12,7 @@ class DeployController extends Controller
     //
     public function index()
     {
+        set_time_limit(0);
         $process = new Process(['../deploy.sh']);
         $process->run();
 
