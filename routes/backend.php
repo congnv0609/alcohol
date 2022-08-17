@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Cms\DeployController;
 use App\Http\Controllers\Cms\IncentiveController;
 use App\Http\Controllers\Cms\EmaController;
 use App\Http\Controllers\Cms\SmokerController;
 use App\Http\Controllers\Cms\ExportController;
-use App\Http\Controllers\Cms\DeployController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
