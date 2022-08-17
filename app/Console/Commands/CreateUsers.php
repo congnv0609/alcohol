@@ -13,7 +13,7 @@ class CreateUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'ema:user-create';
+    protected $signature = 'user-create';
 
     /**
      * The console command description.
@@ -46,7 +46,7 @@ class CreateUsers extends Command
         if (empty($user)) {
             $user = User::create([
                 'name' => $name,
-                'email' => $username,
+                'username' => $username,
                 'password' => Hash::make($password)
             ]);
         } else {
