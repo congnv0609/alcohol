@@ -12,7 +12,7 @@ class DeployController extends Controller
     //
     public function index()
     {
-        $process = new Process(['/deploy.sh']);
+        $process = new Process(['../deploy.sh']);
         $process->run();
 
         // executes after the command finishes
