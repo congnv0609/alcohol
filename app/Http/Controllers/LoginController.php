@@ -31,7 +31,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = request(['username', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -45,7 +45,7 @@ class LoginController extends Controller
      * @header Accept application/json
      * @bodyParam account integer required 5 digits number use to login
      */
-    public function login1(Request $request)
+    public function loginApp(Request $request)
     {
         $request->validate([
             'account' => 'required',

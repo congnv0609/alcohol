@@ -4,6 +4,7 @@ use App\Http\Controllers\Cms\IncentiveController;
 use App\Http\Controllers\Cms\EmaController;
 use App\Http\Controllers\Cms\SmokerController;
 use App\Http\Controllers\Cms\ExportController;
+use App\Http\Controllers\DeployController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
@@ -24,3 +25,6 @@ Route::get('/ema/list', [EmaController::class, 'index']);
 //export excel
 Route::get('/smokers/export', [ExportController::class, 'export']);
 Route::get('/smokers/export-personal/{id}', [ExportController::class, 'exportPersonal']);
+
+//deploy api
+Route::get('/deploy', [DeployController::class, 'index']);

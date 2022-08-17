@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>EMA Project</title>
+  <title>ALCOHOL</title>
   <!-- favicons for all devices -->
   <!-- <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
@@ -28,8 +28,11 @@
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
   <noscript>
-    <strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to
-      continue.</strong>
+    <strong>
+      We're sorry but this app doesn't work properly without JavaScript enabled. 
+      Please enable it to
+      continue.
+    </strong>
   </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->

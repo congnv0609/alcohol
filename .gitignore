@@ -21,3 +21,5 @@ mix-manifest.json
 public/mix-manifest.json
 public/docs
 /.scribe/*
+public/mix-manifest.json
+package-lock.json
