@@ -20,7 +20,7 @@
                     placeholder="Username"
                     type="text"
                     autocomplete="username"
-                    v-model="form.email"
+                    v-model="form.username"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-user"
@@ -66,7 +66,7 @@ export default {
     return {
       alert: false,
       form: {
-        email: "",
+        username: "",
         password: "",
       },
     };
