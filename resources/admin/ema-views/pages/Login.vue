@@ -17,10 +17,10 @@
                   <h1>Login</h1>
                   <p class="text-muted">Sign in to your account</p>
                   <CInput
-                    placeholder="Email"
-                    type="email"
-                    autocomplete="username email"
-                    v-model="form.email"
+                    placeholder="Username"
+                    type="text"
+                    autocomplete="username"
+                    v-model="form.username"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-user"
@@ -66,7 +66,7 @@ export default {
     return {
       alert: false,
       form: {
-        email: "",
+        username: "",
         password: "",
       },
     };
