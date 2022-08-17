@@ -40,13 +40,13 @@ class CreateUsers extends Command
     public function handle()
     {
         $name = $this->ask('What is your name?');
-        $email = $this->ask('What is your email?');
+        $username = $this->ask('What is your username?');
         $password = $this->secret('What is the password?');
-        $user = User::where('email', $email)->first();
+        $user = User::where('username', $username)->first();
         if (empty($user)) {
             $user = User::create([
                 'name' => $name,
-                'email' => $email,
+                'email' => $username,
                 'password' => Hash::make($password)
             ]);
         } else {

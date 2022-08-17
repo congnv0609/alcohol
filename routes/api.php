@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::post('/login', [LoginController::class, 'login1'])->withoutMiddleware('smoking');
+Route::post('/login', [LoginController::class, 'loginApp'])->withoutMiddleware('smoking');
 
 //Api
 Route::get('/1.0/smoker/schedule', [App\Http\Controllers\Api\SmokerController::class, 'getSchedule']);
