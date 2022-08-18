@@ -514,7 +514,7 @@ trait EmaTrait
     public function makeSurvey(array $data)
     {
         $ret = [];
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < 21; $i++) {
             $record = [];
             $record['account_id'] = $data['account_id'];
             $record['account'] = $data['account'];

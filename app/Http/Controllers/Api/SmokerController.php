@@ -25,7 +25,9 @@ class SmokerController extends Controller
 
     private $accountId;
 
-    const PERIOD_TIME = 3;
+    const PERIOD_TIME = 5;
+
+    const TOTAL_DAYS = 21;
 
     public function __construct()
     {
@@ -87,13 +89,13 @@ class SmokerController extends Controller
         $ema_arr1 = $this->makeEmaArray($data['startDate'], 1);
         $ema_arr2 = $this->makeEmaArray($data['startDate'], 2);
         $ema_arr3 = $this->makeEmaArray($data['startDate'], 3);
-        $ema_arr4 = $this->makeEmaArray($data['startDate'], 4);
-        $ema_arr5 = $this->makeEmaArray($data['startDate'], 5);
+        // $ema_arr4 = $this->makeEmaArray($data['startDate'], 4);
+        // $ema_arr5 = $this->makeEmaArray($data['startDate'], 5);
         $this->createEma1($ema_arr1);
         $this->createEma2($ema_arr2);
         $this->createEma3($ema_arr3);
-        $this->createEma4($ema_arr4);
-        $this->createEma5($ema_arr5);
+        // $this->createEma4($ema_arr4);
+        // $this->createEma5($ema_arr5);
         Artisan::call('ema:schedule-get');
         Artisan::call('smoker:update-info', ['account_id' => $this->accountId]);
         MakeReport::dispatch($this->accountId);
@@ -135,13 +137,13 @@ class SmokerController extends Controller
         $ema_arr1 = $this->makeEmaArray($data['startDate'], 1);
         $ema_arr2 = $this->makeEmaArray($data['startDate'], 2);
         $ema_arr3 = $this->makeEmaArray($data['startDate'], 3);
-        $ema_arr4 = $this->makeEmaArray($data['startDate'], 4);
-        $ema_arr5 = $this->makeEmaArray($data['startDate'], 5);
+        // $ema_arr4 = $this->makeEmaArray($data['startDate'], 4);
+        // $ema_arr5 = $this->makeEmaArray($data['startDate'], 5);
         $this->updateEma1($ema_arr1);
         $this->updateEma2($ema_arr2);
         $this->updateEma3($ema_arr3);
-        $this->updateEma4($ema_arr4);
-        $this->updateEma5($ema_arr5);
+        // $this->updateEma4($ema_arr4);
+        // $this->updateEma5($ema_arr5);
         // Cache::forget('ema:schedule');
         Artisan::call('ema:schedule-get');
         Artisan::call('smoker:update-info', ['account_id' => $this->accountId]);
@@ -171,7 +173,8 @@ class SmokerController extends Controller
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
         $startDateTime = date_format($strDateTime, "Y-m-d H:i");
-        $endTime = date_add($strDateTime, date_interval_create_from_date_string("6 days"));
+        $totalDays = self::TOTAL_DAYS-1;
+        $endTime = date_add($strDateTime, date_interval_create_from_date_string("$totalDays days"));
         $endDateTime = date_format($endTime, "Y-m-d H:i");
         if (!empty($startDateTime)) {
             $data['startDate'] = $startDateTime;
@@ -188,7 +191,7 @@ class SmokerController extends Controller
     {
         $data = [];
         $dateString = date_create($startDate);
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < self::TOTAL_DAYS; $i++) {
             $record = [];
             $record['account_id'] = $this->accountId;
             $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
@@ -201,7 +204,7 @@ class SmokerController extends Controller
     private function makeEmaArray($startDate, $ema)
     {
         $data = [];
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < self::TOTAL_DAYS; $i++) {
             $record = [];
             $dateString = date_create($startDate);
             $record['account_id'] = $this->accountId;
