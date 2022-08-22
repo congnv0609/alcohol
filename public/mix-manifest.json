@@ -4,5 +4,6 @@
     "/js/vendor-utils-2.js": "/js/vendor-utils-2.js",
     "/js/vendor-utils-1.js": "/js/vendor-utils-1.js",
     "/css/style.css": "/css/style.css",
-    "/js/vendor.js": "/js/vendor.js"
+    "/js/vendor.js": "/js/vendor.js",
+    "/images/.DS_Store": "/images/.DS_Store"
 }

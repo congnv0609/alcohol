@@ -8,7 +8,7 @@
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img src="/images/img/avatars/ema-logo.png" class="c-avatar-img" />
+          <img src="/images/img/avatars/logo.png" class="c-avatar-img" />
         </div>
       </CHeaderNavLink>
     </template>
