@@ -127,7 +127,7 @@ export default {
       query: {
         account: undefined,
         page: 1,
-        size: 20,
+        size: 21,
         sort: "updated_at,desc",
       },
       caption: "Users",
