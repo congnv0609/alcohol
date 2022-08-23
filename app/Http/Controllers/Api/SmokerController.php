@@ -8,8 +8,6 @@ use App\Jobs\MakeReport;
 use App\Models\Ema1;
 use App\Models\Ema2;
 use App\Models\Ema3;
-use App\Models\Ema4;
-use App\Models\Ema5;
 use App\Models\Incentive;
 use App\Models\Smoker;
 use App\Models\WakeTime;
@@ -17,7 +15,6 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use App\Jobs\SendNotification;
-use Illuminate\Support\Facades\Date;
 
 class SmokerController extends Controller
 {
@@ -81,21 +78,20 @@ class SmokerController extends Controller
         $smoker->save();
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->createIncentive($smokerData);
+        
         //survey
         $dataSurvey = ['start_date' => $data["startDate"], 'end_date' => $data["endDate"], 'account_id' => $this->accountId, 'account' => $smoker->account];
         $survey = $this->makeSurvey($dataSurvey);
         $this->saveSurvey($survey);
+
         //create ema data 
         $ema_arr1 = $this->makeEmaArray($data['startDate'], 1);
         $ema_arr2 = $this->makeEmaArray($data['startDate'], 2);
         $ema_arr3 = $this->makeEmaArray($data['startDate'], 3);
-        // $ema_arr4 = $this->makeEmaArray($data['startDate'], 4);
-        // $ema_arr5 = $this->makeEmaArray($data['startDate'], 5);
+
         $this->createEma1($ema_arr1);
         $this->createEma2($ema_arr2);
         $this->createEma3($ema_arr3);
-        // $this->createEma4($ema_arr4);
-        // $this->createEma5($ema_arr5);
         Artisan::call('ema:schedule-get');
         Artisan::call('smoker:update-info', ['account_id' => $this->accountId]);
         MakeReport::dispatch($this->accountId);
@@ -123,28 +119,28 @@ class SmokerController extends Controller
         // DB::transaction(
         //     function () {
         $smoker = Smoker::where('id', $this->accountId)->first();
+
         if (empty($smoker)) {
             return response()->json($smoker, 404);
         }
         if (empty($data)) {
             return response()->json(['msg' => 'Nothing to update'], 200);
         }
+
         $this->logChange($smoker, $data);
         $smoker->update($data);
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->updateIncentive($smokerData);
+
         //create ema data 
         $ema_arr1 = $this->makeEmaArray($data['startDate'], 1);
         $ema_arr2 = $this->makeEmaArray($data['startDate'], 2);
         $ema_arr3 = $this->makeEmaArray($data['startDate'], 3);
-        // $ema_arr4 = $this->makeEmaArray($data['startDate'], 4);
-        // $ema_arr5 = $this->makeEmaArray($data['startDate'], 5);
+
         $this->updateEma1($ema_arr1);
         $this->updateEma2($ema_arr2);
         $this->updateEma3($ema_arr3);
-        // $this->updateEma4($ema_arr4);
-        // $this->updateEma5($ema_arr5);
-        // Cache::forget('ema:schedule');
+
         Artisan::call('ema:schedule-get');
         Artisan::call('smoker:update-info', ['account_id' => $this->accountId]);
         return response()->json($smoker, 200);
@@ -227,18 +223,6 @@ class SmokerController extends Controller
                     $record['popup_time'] = $record['delay_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
                     $record['popup_time1'] = $record['delay_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = $record['delay_time3'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    break;
-                case 4:
-                    $record['popup_time'] = $record['delay_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
-                    $record['popup_time1'] = $record['delay_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    $record['popup_time2'] = $record['delay_time3'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    break;
-                case 5:
-                    $record['popup_time'] = $record['delay_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
-                    $record['popup_time1'] = $record['delay_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    $record['popup_time2'] = $record['delay_time3'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    $record['date'] = date_format($dateString, 'Y-m-d');
-                    // $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
                     break;
                 default:
                     $record['popup_time'] = null;
@@ -330,52 +314,6 @@ class SmokerController extends Controller
         $date = date_format(new DateTime(), 'Y-m-d');
         if (!empty($data)) {
             $oldData = Ema3::where('account_id', $this->accountId)->get();
-            foreach ($oldData as $key => $item) {
-                if ($item->date > $date) {
-                    $item->update($data[$key]);
-                }
-            }
-        }
-    }
-
-    private function createEma4($data)
-    {
-        $first = Ema4::where('account_id', $this->accountId)->first();
-        if (!empty($data) && empty($first)) {
-            foreach ($data as $item) {
-                Ema4::create($item);
-            }
-        }
-    }
-
-    private function updateEma4($data)
-    {
-        $date = date_format(new DateTime(), 'Y-m-d');
-        if (!empty($data)) {
-            $oldData = Ema4::where('account_id', $this->accountId)->get();
-            foreach ($oldData as $key => $item) {
-                if ($item->date > $date) {
-                    $item->update($data[$key]);
-                }
-            }
-        }
-    }
-
-    private function createEma5($data)
-    {
-        $first = Ema5::where('account_id', $this->accountId)->first();
-        if (!empty($data) && empty($first)) {
-            foreach ($data as $item) {
-                Ema5::create($item);
-            }
-        }
-    }
-
-    private function updateEma5($data)
-    {
-        $date = date_format(new DateTime(), 'Y-m-d');
-        if (!empty($data)) {
-            $oldData = Ema5::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
                 if ($item->date > $date) {
                     $item->update($data[$key]);

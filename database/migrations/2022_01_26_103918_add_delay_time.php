@@ -34,20 +34,6 @@ class AddDelayTime extends Migration
                 $table->timestamp('delay_time3')->nullable();
             });
         });
-        Schema::table('ema4s', function (Blueprint $table) {
-            $table->after('popup_time2', function ($table) {
-                $table->timestamp('delay_time1')->nullable();
-                $table->timestamp('delay_time2')->nullable();
-                $table->timestamp('delay_time3')->nullable();
-            });
-        });
-        Schema::table('ema5s', function (Blueprint $table) {
-            $table->after('popup_time2', function ($table) {
-                $table->timestamp('delay_time1')->nullable();
-                $table->timestamp('delay_time2')->nullable();
-                $table->timestamp('delay_time3')->nullable();
-            });
-        });
     }
 
     /**
