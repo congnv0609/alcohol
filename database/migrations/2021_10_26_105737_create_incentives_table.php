@@ -20,8 +20,6 @@ class CreateIncentivesTable extends Migration
             $table->integer('ema_1')->nullable();
             $table->integer('ema_2')->nullable();
             $table->integer('ema_3')->nullable();
-            $table->integer('ema_4')->nullable();
-            $table->integer('ema_5')->nullable();
             $table->integer('valid_ema')->nullable();
             $table->integer('incentive')->nullable();
             $table->timestamps();

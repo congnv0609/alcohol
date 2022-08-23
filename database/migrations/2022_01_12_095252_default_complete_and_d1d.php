@@ -22,13 +22,6 @@ class DefaultCompleteAndD1d extends Migration
         Schema::table('ema3s', function (Blueprint $table) {
             $table->integer('completed')->nullable()->default(NULL)->change();
         });
-        Schema::table('ema4s', function (Blueprint $table) {
-            $table->integer('completed')->nullable()->default(NULL)->change();
-        });
-        Schema::table('ema5s', function (Blueprint $table) {
-            $table->integer('completed')->nullable()->default(NULL)->change();
-            $table->integer('d1_d')->nullable()->default(NULL)->change();
-        });
     }
 
     /**

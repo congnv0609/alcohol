@@ -49,30 +49,6 @@ class SetNullNone extends Migration
             $table->integer('b16_none')->nullable()->default(NULL)->change();
         });
 
-        Schema::table('ema4s', function (Blueprint $table) {
-            $table->integer('b2_none')->nullable()->default(NULL)->change();
-            $table->integer('b3_none')->nullable()->default(NULL)->change();
-            $table->integer('b4_none')->nullable()->default(NULL)->change();
-            $table->integer('b7_none')->nullable()->default(NULL)->change();
-            $table->integer('b10_none')->nullable()->default(NULL)->change();
-            $table->integer('b13_none')->nullable()->default(NULL)->change();
-            $table->integer('b14_none')->nullable()->default(NULL)->change();
-            $table->integer('b15_none')->nullable()->default(NULL)->change();
-            $table->integer('b16_none')->nullable()->default(NULL)->change();
-        });
-
-        Schema::table('ema5s', function (Blueprint $table) {
-            $table->integer('b2_none')->nullable()->default(NULL)->change();
-            $table->integer('b3_none')->nullable()->default(NULL)->change();
-            $table->integer('b4_none')->nullable()->default(NULL)->change();
-            $table->integer('b7_none')->nullable()->default(NULL)->change();
-            $table->integer('b10_none')->nullable()->default(NULL)->change();
-            $table->integer('b13_none')->nullable()->default(NULL)->change();
-            $table->integer('b14_none')->nullable()->default(NULL)->change();
-            $table->integer('b15_none')->nullable()->default(NULL)->change();
-            $table->integer('b16_none')->nullable()->default(NULL)->change();
-        });
-
     }
 
     /**

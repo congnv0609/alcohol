@@ -5,8 +5,6 @@ namespace App\Http\Traits;
 use App\Models\Ema1;
 use App\Models\Ema2;
 use App\Models\Ema3;
-use App\Models\Ema4;
-use App\Models\Ema5;
 use App\Models\Survey;
 use DateTime;
 use Illuminate\Support\Arr;
@@ -21,8 +19,6 @@ trait EmaTrait
         $data[] = $this->getEma1()->toArray();
         $data[] = $this->getEma2()->toArray();
         $data[] = $this->getEma3()->toArray();
-        $data[] = $this->getEma4()->toArray();
-        $data[] = $this->getEma5()->toArray();
         $data = Arr::collapse($data);
         return $data;
     }
@@ -66,32 +62,6 @@ trait EmaTrait
         return $data;
     }
 
-    private function getEma4()
-    {
-        $data = [];
-        $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-            ->where('date', $date)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
-            ->get();
-        return $data;
-    }
-
-    private function getEma5()
-    {
-        $data = [];
-        $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-            ->where('date', $date)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
-            ->get();
-        return $data;
-    }
-
     private function getEma(int $id, array $data)
     {
         switch ($id) {
@@ -103,12 +73,6 @@ trait EmaTrait
                 return $ema;
             case 3:
                 $ema = Ema3::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                return $ema;
-            case 4:
-                $ema = Ema4::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                return $ema;
-            case 5:
-                $ema = Ema5::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
                 return $ema;
         }
         return null;
@@ -131,18 +95,6 @@ trait EmaTrait
                 return $ema->paginate($size);
             case 3:
                 $ema = DB::table('smokers')->join('ema3s', 'ema3s.account_id', '=', 'smokers.id');
-                if ($accountId > 0) {
-                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
-                }
-                return $ema->paginate($size);
-            case 4:
-                $ema = DB::table('smokers')->join('ema4s', 'ema4s.account_id', '=', 'smokers.id');
-                if ($accountId > 0) {
-                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
-                }
-                return $ema->paginate($size);
-            case 5:
-                $ema = DB::table('smokers')->join('ema5s', 'ema5s.account_id', '=', 'smokers.id');
                 if ($accountId > 0) {
                     $ema->where('smokers.account', 'like', "%" . $accountId . "%");
                 }
@@ -251,8 +203,6 @@ trait EmaTrait
         $this->getEarliestEma1($accountId, $data);
         $this->getEarliestEma2($accountId, $data);
         $this->getEarliestEma3($accountId, $data);
-        $this->getEarliestEma4($accountId, $data);
-        $this->getEarliestEma5($accountId, $data);
         $next_survey = reset($data);
 
         if (!empty($data)) {
@@ -380,70 +330,6 @@ trait EmaTrait
         return;
     }
 
-    private function getEarliestEma4($accountId, &$data)
-    {
-        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-            ->where('account_id', $accountId)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
-            ->orderby('date', 'asc')->get();
-        if (!empty($list)) {
-            foreach ($list as $ema) {
-                $popup_time2 = date_format(new DateTime($ema->popup_time2), 'Y-m-d H:i:s');
-                $popup_time1 = date_format(new DateTime($ema->popup_time1), 'Y-m-d H:i:s');
-                $popup_time = date_format(new DateTime($ema->popup_time), 'Y-m-d H:i:s');
-                if (!empty($ema->postponded_3) && $ema->postponded_3 > 0 && $popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                }
-            }
-        }
-        return;
-    }
-
-    private function getEarliestEma5($accountId, &$data)
-    {
-        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-            ->where('account_id', $accountId)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
-            ->orderby('date', 'asc')->get();
-        if (!empty($list)) {
-            foreach ($list as $ema) {
-                $popup_time2 = date_format(new DateTime($ema->popup_time2), 'Y-m-d H:i:s');
-                $popup_time1 = date_format(new DateTime($ema->popup_time1), 'Y-m-d H:i:s');
-                $popup_time = date_format(new DateTime($ema->popup_time), 'Y-m-d H:i:s');
-                if (!empty($ema->postponded_3) && $ema->postponded_3 > 0 && $popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                }
-            }
-        }
-        return;
-    }
-
     private function getEma1ByCond($cond)
     {
         $data = [];
@@ -474,26 +360,6 @@ trait EmaTrait
         return $data;
     }
 
-    private function getEma4ByCond($cond)
-    {
-        $data = [];
-        if (empty($cond)) {
-            return [];
-        }
-        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
-        return $data;
-    }
-
-    private function getEma5ByCond($cond)
-    {
-        $data = [];
-        if (empty($cond)) {
-            return [];
-        }
-        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
-        return $data;
-    }
-
     public function getEmaByQuery($query)
     {
         switch ($query['nth_ema']) {
@@ -503,10 +369,6 @@ trait EmaTrait
                 return $this->getEma2ByCond($query);
             case 3:
                 return $this->getEma3ByCond($query);
-            case 4:
-                return $this->getEma4ByCond($query);
-            case 5:
-                return $this->getEma5ByCond($query);
         }
         return null;
     }
