@@ -20,7 +20,7 @@
         :height="35" 
         viewBox="0 0 50 35"
       />
-      <h3 style="margin-top:8px;font-weight:bold">EMA CMS</h3>
+      <h3 style="margin-top:8px;font-weight:bold">Alcohol CMS</h3>
       <CIcon 
         class="c-sidebar-brand-minimized" 
         name="logo" 
