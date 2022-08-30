@@ -41,3 +41,6 @@ Route::get('/1.0/incentive/progress', [App\Http\Controllers\Api\IncentiveControl
 //     return $request->user();
 // });
 Route::post('send-mail', [SendMailController::class, 'sendTest'])->withoutMiddleware('smoking');
+
+//upload images
+Route::post('/1.0/photo/upload', [App\Http\Controllers\Api\UploadController::class, 'upload']);
