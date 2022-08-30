@@ -22,8 +22,10 @@ class UploadController extends Controller
      * Upload photo
      * @authenticated
      * @header accountId integer required
+     * @bodyParam photos file required
      * @bodyParam survey_number(default 00)
      * @bodyParam question_number(default 0000)
+     * 
      * 
      */
     
