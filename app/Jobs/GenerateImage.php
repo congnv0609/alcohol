@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class GenerateImage implements ShouldQueue
 {
@@ -47,13 +48,20 @@ class GenerateImage implements ShouldQueue
     }
 
     private function buildPathToStorage(){
-        return sprintf('upload/%s/%s', $this->_account, $this->_size);
+        $size = 'small';
+        switch($this->_size) {
+            case 1024: $size = 'large'; break;
+            case 512: $size = 'medium'; break;
+            default: $size = 'small'; break;
+        }
+        return sprintf('app/upload/%s/%s', $this->_account, $size);
     }
 
     private function resize_image($path, $w, $h, $crop = FALSE)
     {
         // $path = storage_path()."/$file";
-        list($width, $height, $type) = getimagesize($path);
+        list($width, $height, $type) = getimagesize(public_path($path));
+        $imgName = basename($path);
         $r = $width / $height;
         if ($crop) {
             if ($width > $height) {
@@ -74,34 +82,9 @@ class GenerateImage implements ShouldQueue
         }
 
         $pathToStorage = $this->buildPathToStorage();
-
-        $img = Image::make($this->_path)->resize($newwidth, $newheight, function($constraint){
+        File::ensureDirectoryExists(storage_path($pathToStorage));
+        $img = Image::make(public_path($this->_path))->resize($newwidth, $newheight, function($constraint){
             $constraint->aspectRatio();
-        })->save($pathToStorage.'/'.$this->_path);
-
-        // switch ($type) {
-        //     case 2:
-        //         $src = imagecreatefromjpeg($file);
-        //         $imgResized = imagescale($src, $newwidth, $newheight);
-        //         // Storage::put($this->_newPath.'/'.$imgResized);
-        //         $fullPath = storage_path().'/'.$this->_newPath;
-        //         // imagejpeg($imgResized, $fullPath);
-        //         Storage::put($this->_newPath, File::get($file));
-        //         break;
-        //     case 3:
-        //         $src = imagecreatefrompng($file);
-        //         $imgResized = imagescale($src, $newwidth, $newheight);
-        //         // Storage::put($this->_newPath . '/' . $imgResized);
-        //         // imagepng($imgResized, 'path_of_Image/Name_of_Image_resized.png');
-        //         break;
-        // }
-
-        // $imgResized = imagescale($src, $newwidth, $newheight);
-
-        // $src = imagecreatefromjpeg($file);
-        // $dst = imagecreatetruecolor($newwidth, $newheight);
-        // imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
-        // return $dst;
+        })->save(storage_path($pathToStorage . '/' . $imgName));
     }
 }
