@@ -30,38 +30,38 @@ class UploadController extends Controller
      */
     
     public function upload(){
-        $this->validate(request(), [
-            'photos' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        // $this->validate(request(), [
+        //     'photos' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        // ]);
         if (request()->hasFile('photos')) {
             $account_id = request()->header('accountId');
             $smoker = Smoker::find($account_id);
             if(empty($smoker)){
                 return response()->json(['msg: User not found'],404);
             }
-            $extension = request()->photos->extension();
             $account = $smoker->term > 1? sprintf('%d-%d',$smoker->account, $smoker->term):$smoker->account;
-            $path = sprintf('upload/%s/original', $account);
-
-            $photo = $this->makeData($smoker);
-            $this->newPhoto($photo, $extension);
-
-            // $fileName = sprintf('%s_%8s_%2s_%4s_%s.%s', $account, $date, $surveyNo, $questionNo, $photo->photo_number, $extension);
-            $path = request()->photos->storeAs($path, $photo->photo_name);
-            if (request()->file('photos')->isValid()) {
-                //generate photo size
-                // $pathForLargeImage = sprintf('upload/%s/large', $account);
-                // $pathForMediumImage = sprintf('upload/%s/medium', $account);
-                // $pathForSmallImage = sprintf('upload/%s/small', $account);
-                //get original path
-                // $path = asset($path);
-                // GenerateImage::dispatch($path, $account, self::LARGE_SIZE);
-                // GenerateImage::dispatch($path, $pathForMediumImage, 512);
-                // GenerateImage::dispatch($path, $pathForSmallImage);
-                
+            $folder = sprintf('upload/%s/original', $account);
+            //upload files
+            $photos = request()->file('photos');
+            $arrayPath = [];
+            foreach ($photos as $key => $photo) {
+                //photos data
+                $extension = $photo->extension();
+                $photo = $this->makeData($smoker);
+                $this->newPhoto($photo, $extension);
+                $path = request()->file('photos')[$key]->storeAs($folder, $photo->photo_name);
+                $arrayPath[] = $path;
+                if (request()->file('photos')[$key]->isValid()) {
+                    //generate multi photo size
+                    GenerateImage::dispatch($path, $account, self::LARGE_SIZE);
+                    GenerateImage::dispatch($path, $account, self::MEDIUM_SIZE);
+                    GenerateImage::dispatch($path, $account);
+                }
             }
-            return response()->json(['msg'=>'Upload success', 'path'=>$path], 200);
+            
+            return response()->json(['msg'=>'Uploaded successfully', 'path'=> $arrayPath], 200);
             // dd($extension);
         }
+        return response()->json(['msg'=>'No any file to upload'], 400);
     }
 }
