@@ -22,45 +22,6 @@ class EmaController extends Controller
     }
 
     /**
-     * Delay survey
-     * emaId, postponded value
-     * @authenticated
-     * @header accountId integer required
-     * @bodyParam postponded_1 integer 0,1,2
-     * @bodyParam postponded_2 integer 0,1,2
-     * @bodyParam postponded_3 integer 0,1,2
-     * 
-     */
-
-    public function delay($emaId)
-    {
-        $data = [];
-        $pp1 = request()->input('postponded_1');
-        $pp2 = request()->input('postponded_2');
-        $pp3 = request()->input('postponded_3');
-        if (isset($pp1)) {
-            $data['postponded_1'] = $pp1;
-        }
-        if (isset($pp2)) {
-            $data['postponded_2'] = $pp2;
-        }
-        if (isset($pp3)) {
-            $data['postponded_3'] = $pp3;
-        }
-        $data['date'] = date_format(new DateTime(), 'Y-m-d');
-        $data['account_id'] = $this->accountId;
-        $ema = $this->getEma($emaId, $data);
-        $data['popup_time'] = $ema->popup_time;
-        $data['popup_time1'] = $ema->popup_time1;
-        $data['popup_time2'] = $ema->popup_time2;
-
-        $this->updatePopupTime($data);
-        $ema->update($data);
-        Artisan::call('ema:schedule-get');
-        return response()->json($ema, 200);
-    }
-
-    /**
      * update an EMA and date values, use form url encoded
      * id [1=EMA1, 2=EMA2, 3=EMA3, 4=EMA4, 5=EMA5]
      * @header accountId integer required
@@ -74,7 +35,6 @@ class EmaController extends Controller
     {
         $data = request()->all();
         $data['submit_time'] = new DateTime();
-        unset($data['postponded_1'], $data['postponded_2'], $data['postponded_3']);
         $data['account_id'] = $this->accountId;
         $ema = $this->getEma($id, $data);
         if (empty($ema)) {

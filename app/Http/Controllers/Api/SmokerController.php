@@ -210,19 +210,19 @@ class SmokerController extends Controller
             $period = ($ema-1) * self::PERIOD_TIME;
             switch ($ema) {
                 case 1:
-                    $record['popup_time'] = $record['delay_time1'] = date_format($dateString, 'Y-m-d H:i:s');
-                    $record['popup_time1'] = $record['delay_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    $record['popup_time2'] = $record['delay_time3'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format($dateString, 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("10 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 2:
-                    $record['popup_time'] = $record['delay_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
-                    $record['popup_time1'] = $record['delay_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    $record['popup_time2'] = $record['delay_time3'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("10 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 3:
-                    $record['popup_time'] = $record['delay_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
-                    $record['popup_time1'] = $record['delay_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-                    $record['popup_time2'] = $record['delay_time3'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("10 minutes")), 'Y-m-d H:i:s');
                     break;
                 default:
                     $record['popup_time'] = null;

@@ -44,7 +44,7 @@ class CheckEma extends Command
         // return 0;
         $accountId = $this->ask('What is your account ID?');
         // $data = $this->getEmaSchedule();
-        $data = Cache::get('ema:schedule');
+        $data = Cache::get('alcohol:schedule');
         $ret = [];
         foreach($data as $value) {
             if($value['account_id'] == $accountId) {

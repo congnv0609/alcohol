@@ -76,8 +76,6 @@ class ReportUser extends Command
         $count += Ema1::where([['nth_popup', '>', 0], ['account_id', $accountId]])->count();
         $count += Ema2::where([['nth_popup', '>', 0], ['account_id', $accountId]])->count();
         $count += Ema3::where([['nth_popup', '>', 0], ['account_id', $accountId]])->count();
-        $count += Ema4::where([['nth_popup', '>', 0], ['account_id', $accountId]])->count();
-        $count += Ema5::where([['nth_popup', '>', 0], ['account_id', $accountId]])->count();
         return $count;
     }
 
@@ -87,8 +85,6 @@ class ReportUser extends Command
         $count += Ema1::where([['completed', true], ['account_id', $accountId]])->count();
         $count += Ema2::where([['completed', true], ['account_id', $accountId]])->count();
         $count += Ema3::where([['completed', true], ['account_id', $accountId]])->count();
-        $count += Ema4::where([['completed', true], ['account_id', $accountId]])->count();
-        $count += Ema5::where([['completed', true], ['account_id', $accountId]])->count();
         return $count;
     }
 }

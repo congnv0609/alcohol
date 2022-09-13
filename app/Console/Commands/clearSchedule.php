@@ -39,7 +39,7 @@ class clearSchedule extends Command
     public function handle()
     {
         // return Command::SUCCESS;
-        Cache::forget('ema:schedule');
+        Cache::forget('alcohol:schedule');
         $this->info('clear cached!');
     }
 }

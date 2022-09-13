@@ -56,12 +56,6 @@
               <template #ema_3="{ item }">
                 <td>{{ item.ema_3 }}</td>
               </template>
-              <template #ema_4="{ item }">
-                <td>{{ item.ema_4 }}</td>
-              </template>
-              <template #ema_5="{ item }">
-                <td>{{ item.ema_5 }}</td>
-              </template>
               <template #valid_ema="{ item }">
                 <td>{{ item.valid_ema }}</td>
               </template>
@@ -101,8 +95,6 @@ export default {
         { key: "ema_1", label: "ema_1" },
         { key: "ema_2", label: "ema_2" },
         { key: "ema_3", label: "ema_3" },
-        { key: "ema_4", label: "ema_4" },
-        { key: "ema_5", label: "ema_5" },
         { key: "valid_ema", label: "valid_ema" },
         { key: "incentive", label: "incentive" },
       ],
