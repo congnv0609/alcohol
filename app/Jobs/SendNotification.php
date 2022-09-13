@@ -4,13 +4,12 @@ namespace App\Jobs;
 
 use App\Http\Traits\EmaTrait;
 use App\Models\Smoker;
+use App\Notifications\EmaPrompt;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Artisan;
 
 class SendNotification implements ShouldQueue
 {
@@ -37,14 +36,17 @@ class SendNotification implements ShouldQueue
     {
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->_ema['account_id'])->first();
         if (!empty($smoker)) {
-            $this->push($smoker);
+            // $this->push($smoker);
+            $smoker->notify(new EmaPrompt($smoker));
             UpdateSmokerReport::dispatch($smoker);
         }
     }
 
     private function push($smoker)
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
+        $project_id = env('FIREBASE_PROJECT_ID', 'hkualco');
+        $url = "https://fcm.googleapis.com/v1/projects/$project_id/messages:send";
+        //firebase v1
         $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = env('FCM');
         $ema = $this->getPopupInfo($this->_ema);

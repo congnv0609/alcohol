@@ -50,4 +50,14 @@ class Smoker extends Model
         // 'startDate' => 'datetime',
         // 'endDate' => 'datetime',
     ];
+
+    /**
+     * Specifies the user's FCM token
+     *
+     * @return string|array
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->device_token;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Events\SmokerProcessed;
 use App\Jobs\SendNotification;
 use App\Jobs\UpdateSmokerInfo;
+use App\Notifications\EmaPrompt;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DateTime;
@@ -32,7 +33,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('ema:schedule-get')->daily();
         // $schedule->command('ema:get-schedule');
-        $data = Cache::get('ema:schedule');
+        $data = Cache::get('alcohol:schedule');
 
         if (!empty($data)) {
             foreach ($data as $key => $value) {

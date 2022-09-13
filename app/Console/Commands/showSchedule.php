@@ -40,7 +40,7 @@ class showSchedule extends Command
     {
         // return Command::SUCCESS;
         $this->info('schedule cached!');
-        $data = Cache::get('ema:schedule');
+        $data = Cache::get('alcohol:schedule');
         dd($data);
     }
 }

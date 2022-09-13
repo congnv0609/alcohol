@@ -27,9 +27,6 @@ class CreateEma3sTable extends Migration
             $table->timestamp('submit_time')->nullable();
             $table->integer('time_taken')->nullable();
             $table->boolean('completed')->default(false);
-            $table->boolean('postponded_1')->nullable();
-            $table->boolean('postponded_2')->nullable();
-            $table->boolean('postponded_3')->nullable();
 
             $table->boolean('c1_a')->default(false);
             $table->boolean('c1_b')->default(false);

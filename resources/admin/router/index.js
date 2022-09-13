@@ -65,6 +65,7 @@ const Ema = () => import('../ema-views/ema/List')
 const Overview = () => import('../ema-views/smokers/Overview')
 const Incentive = () => import('../ema-views/incentives/List')
 const Report = () => import('../ema-views/export/Report')
+const Image = () => import('../ema-views/image/List')
 
 
 Vue.use(Router)
@@ -118,6 +119,20 @@ function configRoutes () {
           path: 'export',
           name: 'ExportReport',
           component: Report
+        },
+        {
+          path: 'images',
+          redirect: 'images/list',
+          component: {
+            render(c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'list',
+              name: 'ImageList',
+              component: Image
+            },
+          ]
         },
         {
           path: 'ema',
