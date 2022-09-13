@@ -64,7 +64,7 @@ class EmaPrompt extends Notification
     public function fcmProject($notifiable, $message)
     {
         // $message is what is returned by `toFcm`
-        return 'hkualco'; // name of the firebase project to use
+        return 'HKUALCO'; // name of the firebase project to use
     }
 
     /**
