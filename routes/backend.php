@@ -29,6 +29,7 @@ Route::get('/smokers/export-personal/{id}', [ExportController::class, 'exportPer
 
 //images list
 Route::get('/images/list', [PhotoController::class, 'index']);
+Route::post('/images/download', [PhotoController::class, 'download']);
 
 //deploy api
 Route::get('/deploy', [DeployController::class, 'index']);
