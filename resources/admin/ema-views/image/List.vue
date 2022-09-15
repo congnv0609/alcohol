@@ -24,7 +24,7 @@
                 />
                 <CCol>
                   <CButton color="info" @click="getList">Search</CButton>
-                  <CButton color="info" @click="getList">Download Image</CButton>
+                  <CButton color="info" @click="download">Download Image</CButton>
                 </CCol>
               </CRow>
             </CForm>
@@ -36,6 +36,7 @@
               :items="items"
               :fields="fields"
               :items-per-page="query.size"
+              @row-clicked="rowClicked"
             >
               <template #user_id="{ item }">
                 <td>{{ item.account }}</td>
@@ -48,8 +49,19 @@
                   <img :src="item.small_url" width="64px" class="img-fluid" alt="Responsive image">
                 </td>
               </template>
-              <template #all>
+              <template #select-header>
+                <CInputCheckbox
+                  @update:checked="(e) => checkAll(e)"
+                  custom
+                />
+              </template>
+              <template #select="{ item }">
                 <td>
+                  <CInputCheckbox
+                    :checked="item._selected"
+                    @update:checked="() => check(item)"
+                    custom
+                  />
                 </td>
               </template>
             </CDataTable>
@@ -65,7 +77,7 @@
   </div>
 </template>
 <script>
-import { list } from "../../helpers/image";
+import { list, download } from "../../helpers/image";
 export default {
   name: "Images",
   data() {
@@ -81,11 +93,12 @@ export default {
         { key: "user_id", label: "user_id" },
         { key: "file_name", label: "File name" },
         { key: "image", label: "Image" },
-        { key: "all", label: "All" },
+        { key: "select", label: "", _style: "min-width:1%", sorter: false, filter: false, },
       ],
       items: [],
       form: {
       },
+      accountId: [],
     };
   },
   mounted() {
@@ -112,14 +125,33 @@ export default {
           console.log(err);
         });
     },
-    editRow(id) {
-      this.$router.push({ path: `/smokers/edit/${id}` });
+    download(){
+      this.getArrayAccount();
+      download({array_id: this.accountId}).then((res)=>{
+
+      });
     },
-    deleteRow(id) {
-      console.log("delete", id);
+    rowClicked(item, index, column, e) {
+      if (!["INPUT", "LABEL"].includes(e.target.tagName)) {
+        this.check(item);
+      }
     },
-    overview(id) {
-      this.$router.push({ path: `/smokers/overview/${id}` });
+    check(item) {
+      const val = Boolean(this.items[item.id]._selected);
+      this.$set(item, "_selected", !val);
+      // this.downloadList.push(item.id);
+    },
+    checkAll(checked) {
+      this.items.forEach((item) => {
+        // this.downloadList.push(item.id);
+        this.$set(item, "_selected", checked);
+      });
+    },
+    getArrayAccount() {
+      this.accountId = [];
+      this.items.forEach((item)=>{
+        this.accountId.push(item.id);
+      })
     },
   },
 };
