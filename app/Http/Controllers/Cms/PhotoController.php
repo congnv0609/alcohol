@@ -39,26 +39,29 @@ class PhotoController extends Controller
 
         if (!File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
-            exec("chown -R root:apache " . $path);
+            // exec("chown -R root:apache " . $path);
         }   
 
-        $fileName = 'download/download-photos.zip';
+        $fileName = 'download-photos.zip';
 
-        if ($zip->open(public_path($fileName), ZipArchive::CREATE | ZIPARCHIVE::OVERWRITE)) {
+        if ($zip->open(public_path("download/".$fileName), ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
 
             // $files = File::files(public_path('upload/12345/small'));
             $files = $this->getFilePath($listPhotos);
 
             foreach ($files as $key => $value) {
-                $relativeNameInZipFile = basename($value);
-                $zip->addFile($value, $relativeNameInZipFile);
+                if(file_exists($value)) {
+                    $relativeNameInZipFile = basename($value);
+                    $zip->addFile($value, $relativeNameInZipFile);
+                }
+                
             }
-
             $zip->close();
-            
+            ob_clean();
         }
 
-        return response()->download(public_path($fileName));
+        $headers = array('Content-Type: application/octet-stream', 'Content-Length: ' . filesize($fileName));
+        return response()->download(public_path("download/".$fileName), $fileName, $headers)->deleteFileAfterSend(true);
     }
 
     private function getFilePath($listFiles, $size='original') {
