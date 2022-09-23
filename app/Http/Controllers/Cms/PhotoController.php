@@ -60,8 +60,8 @@ class PhotoController extends Controller
             ob_clean();
         }
 
-        $headers = array('Content-Type: application/octet-stream', 'Content-Length: ' . filesize($fileName));
-        return response()->download(public_path("download/".$fileName), $fileName, $headers)->deleteFileAfterSend(true);
+        // $headers = array('Content-Type: application/octet-stream', 'Content-Length: ' . filesize($fileName));
+        return response()->download(public_path("download/".$fileName))->deleteFileAfterSend(true);
     }
 
     private function getFilePath($listFiles, $size='original') {
