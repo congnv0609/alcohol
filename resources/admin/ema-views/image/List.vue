@@ -137,20 +137,20 @@ export default {
       }
     },
     check(item) {
-      const val = Boolean(this.items[item.id]._selected);
+      const val = Boolean(item._selected);
       this.$set(item, "_selected", !val);
-      // this.downloadList.push(item.id);
     },
     checkAll(checked) {
       this.items.forEach((item) => {
-        // this.downloadList.push(item.id);
         this.$set(item, "_selected", checked);
       });
     },
     getArrayAccount() {
       this.accountId = [];
       this.items.forEach((item)=>{
-        this.accountId.push(item.id);
+        if(item._selected) {
+          this.accountId.push(item.id);
+        }
       })
     },
   },
