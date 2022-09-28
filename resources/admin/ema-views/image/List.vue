@@ -53,6 +53,7 @@
                 <CInputCheckbox
                   @update:checked="(e) => checkAll(e)"
                   custom
+                  label="All"
                 />
               </template>
               <template #select="{ item }">
