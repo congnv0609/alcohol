@@ -86,6 +86,7 @@ export default {
       last_page: 1,
       query: {
         account: undefined,
+        photo_name: undefined,
         page: 1,
         size: 20,
       },
