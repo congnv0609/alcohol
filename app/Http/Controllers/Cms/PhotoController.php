@@ -18,10 +18,10 @@ class PhotoController extends Controller
         $size = request()->input('size');
         $query = request()->query();
         $account = $query['account'] ?? '%';
-        $fileName = $query['file_name'] ?? '%';
+        $fileName = $query['photo_name'] ?? '%';
         $list = UploadPhoto::where([
             ['account', 'like', $account],
-            ['photo_name', 'like', $fileName],
+            ['photo_name', 'like', '%'.$fileName.'%'],
         ])
         ->orderBy('updated_at', 'desc')
         ->paginate($size)->withQueryString();
