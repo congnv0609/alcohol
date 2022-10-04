@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Http\Traits\EmaTrait;
+use App\Jobs\UpdateCountPush;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -52,6 +53,7 @@ class EmaPrompt extends Notification
     {
         $ema = $this->getPopupInfo($this->_ema);
         $info = $this->getPromptMessage($ema);
+        UpdateCountPush::dispatch($ema);
         $sound = $this->_user->notification == 1 ? "default" : null;
         return FcmMessage::create()
             ->setData(["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], 'nth_day' => $ema['nth_day']])
