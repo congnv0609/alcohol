@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Http\Traits\EmaTrait;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,25 +11,30 @@ use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\AndroidConfig;
 use NotificationChannels\Fcm\Resources\AndroidFcmOptions;
+use NotificationChannels\Fcm\Resources\AndroidMessagePriority;
 use NotificationChannels\Fcm\Resources\AndroidNotification;
 use NotificationChannels\Fcm\Resources\ApnsConfig;
 use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
+use NotificationChannels\Fcm\Resources\NotificationPriority;
 
 class EmaPrompt extends Notification
 {
-    use Queueable;
+    use Queueable, EmaTrait;
 
-    private $_smoker;
+    private $_ema = [];
+
+    private $_user = null;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($smoker)
+    public function __construct($ema, $user)
     {
         //
-        $this->_smoker = $smoker;
+        $this->_ema = $ema;
+        $this->_user = $user;
     }
 
     /**
@@ -44,19 +50,32 @@ class EmaPrompt extends Notification
 
     public function toFcm($notifiable)
     {
+        $ema = $this->getPopupInfo($this->_ema);
+        $info = $this->getPromptMessage($ema);
+        $sound = $this->_user->notification == 1 ? "default" : null;
         return FcmMessage::create()
-            ->setData(['data1' => 'value', 'data2' => 'value2'])
+            ->setData(["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], 'nth_day' => $ema['nth_day']])
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
-                ->setTitle('Account Activated')
-                ->setBody('Your account has been activated.')
-                ->setImage('http://example.com/url-to-image-here.png'))
+                ->setTitle($info["title"])
+                ->setBody($info["body"])
+            )
             ->setAndroid(
                 AndroidConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
-                    ->setNotification(AndroidNotification::create()->setColor('#0A0A0A'))
-            )->setApns(
+                    ->setNotification(
+                        AndroidNotification::create()
+                        // ->setColor('#0A0A0A')
+                        ->setSound($sound)
+                        ->setNotificationPriority(NotificationPriority::PRIORITY_MAX())
+                    )
+                    ->setPriority(AndroidMessagePriority::HIGH())
+            )
+            ->setApns(
                 ApnsConfig::create()
-                    ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios'))
+                    ->setFcmOptions(
+                        ApnsFcmOptions::create()
+                        ->setAnalyticsLabel('analytics_ios')
+                    )
             );
     }
 
