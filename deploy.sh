@@ -77,6 +77,7 @@ php artisan route:cache
 php artisan view:cache
 php artisan scribe:generate
 php artisan storage:link
+php artisan ema:schedule-get
 
 systemctl restart supervisord.service
 
