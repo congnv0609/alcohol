@@ -358,4 +358,22 @@ class SmokerController extends Controller
         }
         SendNotification::dispatch($ema->toArray());
     }
+
+    /**
+     * delete account
+     * @authenticated
+     * @header accountId integer required
+     */
+    public function deleteAccount(Request $request)
+    {
+        $smoker = Smoker::find($this->accountId);
+
+        if (!empty($smoker)) {
+            $smoker->update(['status' => !$smoker->status]);
+            return response()->json(['Sent delete account request, please wait admin to approve']);
+        }
+
+        return response()->json(['msg' => 'User not found!'], 404);
+        
+    }
 }

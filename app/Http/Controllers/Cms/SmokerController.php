@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\ReportTrait;
 use App\Jobs\MakeReport;
 use App\Models\Ema1;
+use App\Models\Ema2;
+use App\Models\Ema3;
+use App\Models\Incentive;
 use App\Models\Smoker;
 use App\Models\Survey;
+use App\Models\UploadPhoto;
+use App\Models\WakeTime;
+use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SmokerController extends Controller
 {
@@ -75,18 +83,30 @@ class SmokerController extends Controller
      */
     public function list()
     {
-        $list = [];
         $size = request()->input('size');
         $query = request()->query();
         $account = $query['account']??null;
         $sort = explode(',', $query['sort']);
-        $list = Survey::where(function ($con) use ($account) {
-            if(!empty($account)) {
-                $con->where('account', 'like', $account);
-            }
-        })->orderBy($sort[0], $sort[1])
-        ->orderBy('nth_day_current', 'asc')
-        ->paginate($size)->withQueryString();
+
+        // $list = Survey::where(function ($con) use ($account) {
+        //     if(!empty($account)) {
+        //         $con->where('account', 'like', $account);
+        //     }
+        // })
+        // ->orderBy($sort[0], $sort[1])
+        // ->orderBy('nth_day_current', 'asc')
+        // ->paginate($size)->withQueryString();
+
+        $list = DB::table('surveys')
+                ->join('smokers', 'smokers.id', '=', 'surveys.account_id');
+
+        if ($account > 0) {
+            $list->where('smokers.account', 'like', "%" . $account . "%");
+        }
+        $list = $list->orderBy('surveys.'.$sort[0], $sort[1])
+            ->orderBy('surveys.nth_day_current', 'asc')
+            ->paginate($size);
+
         return response()->json($list, 200);
     }
 
@@ -147,6 +167,47 @@ class SmokerController extends Controller
             return response()->json($data,200);
         }
         return response()->json($data, 404);
+    }
+
+
+    public function check()
+    {
+        $list = Survey::find(1)->smoker;
+
+        return response()->json($list, 200);
+    }
+
+    /**
+     * delete account personal description
+     * 
+     */
+    public function delete($accountId)
+    {
+        DB::beginTransaction();
+        try{
+            $smoker = Smoker::find($accountId);
+            if(empty($smoker)) {
+                return response()->json(['msg'=>'Account not found'], 404);
+            }
+            Ema1::where('account_id', $accountId)->delete();
+            Ema2::where('account_id', $accountId)->delete();
+            Ema3::where('account_id', $accountId)->delete();
+            Incentive::where('account_id', $accountId)->delete();
+            //delete photo
+            $photo = UploadPhoto::where('account_id', $accountId)->first();
+            if(!empty($photo)) {
+                Storage::deleteDirectory("upload/$photo->account");
+                UploadPhoto::where('account_id', $accountId)->delete();
+            }
+            WakeTime::where('account_id', $accountId)->delete();
+            Survey::where('account_id', $accountId)->delete();
+            Smoker::destroy($accountId);
+            DB::commit();
+            return response()->json(['msg'=>'Deleted account'], 200);
+        } catch(Exception $ex) {
+            DB::rollback();
+            return response()->json(['msg'=>'failed to delete'], 500);
+        }
     }
 
 }

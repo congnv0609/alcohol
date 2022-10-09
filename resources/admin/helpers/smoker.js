@@ -22,6 +22,18 @@ export function get(query) {
     })
 }
 
+export function deleteAccount(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`/backend/smokers/delete/${id}`)
+            .then(result => {
+                resolve(result.data);
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+
 export function update(data) {
     return new Promise((resolve, reject) => {
         axios.put(`/backend/smokers/update/${data.id}`, data)

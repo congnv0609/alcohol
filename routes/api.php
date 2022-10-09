@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SmokerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SendMailController;
@@ -44,3 +45,5 @@ Route::post('send-mail', [SendMailController::class, 'sendTest'])->withoutMiddle
 
 //upload images
 Route::post('/1.0/photo/upload', [App\Http\Controllers\Api\UploadController::class, 'upload']);
+
+Route::put('/1.0/account/delete', [SmokerController::class, 'deleteAccount']);

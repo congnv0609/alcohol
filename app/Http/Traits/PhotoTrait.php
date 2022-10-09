@@ -40,4 +40,10 @@ trait PhotoTrait
         $photo->photo_number = $photo_number + 1;
         return $photo;
     }
+
+    public function deleteAccountPhoto($accountId)
+    {
+        # code...
+    }
+
 }
