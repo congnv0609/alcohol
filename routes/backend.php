@@ -17,6 +17,7 @@ Route::get('/smokers/list', [SmokerController::class, 'list']);
 Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
 Route::put('/smokers/update/{id}', [SmokerController::class, 'updateSchedule']);
 Route::get('/smokers/overview/user/{id}', [SmokerController::class, 'overview']);
+Route::get('/smokers/delete/{id}', [SmokerController::class, 'delete']);
 
 Route::get('/incentive/list', [IncentiveController::class, 'list']);
 
@@ -33,3 +34,5 @@ Route::post('/images/download', [PhotoController::class, 'download']);
 
 //deploy api
 Route::get('/deploy', [DeployController::class, 'index']);
+
+Route::get('/check', [SmokerController::class, 'check']);

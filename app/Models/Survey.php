@@ -16,5 +16,10 @@ class Survey extends Model
     //     'end_date' => 'datetime',
     // ];
 
+    public function smoker()
+    {
+        return $this->belongsTo(Smoker::class, 'account_id');
+    }
+
 
 }

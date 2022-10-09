@@ -24,6 +24,7 @@ class Smoker extends Model
         'startDate',
         'endDate',
         'notification',
+        'status',
         'device_token',
     ];
 
@@ -60,4 +61,12 @@ class Smoker extends Model
     {
         return $this->device_token;
     }
+
+    /**
+     * Get the phone associated with the user.
+     */
+    // public function phone()
+    // {
+    //     return $this->hasOne(Phone::class);
+    // }
 }

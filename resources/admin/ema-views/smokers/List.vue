@@ -39,7 +39,7 @@
               :items-per-page="query.size"
             >
               <template #user_id="{ item }">
-                <td>{{ item.account }}</td>
+                <td>{{ item.account }}</br><CButton v-if="item.status" color="danger" @click="deleteUser(item.id)" variant="ghost">(Delete)</CButton></td>
               </template>
               <template #start_date="{ item }">
                 <td>{{ item.start_date | moment("YYYY-MM-DD") }}</td>
@@ -115,14 +115,29 @@
         <CPagination :active-page.sync="query.page" :pages="last_page" />
       </CCol>
     </CRow>
+    <CModal
+      title="Delete account forever"
+      color="danger"
+      size="sm"
+      :centered="alert.centered"
+      :show.sync="alert.show"
+      @update:show = "closeModal"
+    >
+      Your action cannot recover
+    </CModal>
   </div>
 </template>
 <script>
-import { smokers, exportPersonal } from "../../helpers/smoker";
+import { smokers, exportPersonal, deleteAccount } from "../../helpers/smoker";
 export default {
   name: "Users",
   data() {
     return {
+      alert: {
+        show: false,
+        centered: true,
+        accountId: undefined
+      },
       last_page: 1,
       query: {
         account: undefined,
@@ -170,6 +185,22 @@ export default {
     };
   },
   methods: {
+    deleteUser(id){
+      this.alert.show = true;
+      this.alert.accountId = id;
+      // deleteAccount(id).then(result=>{
+      //   this.getList(this.query);
+      // });
+    },
+    closeModal(status, evt, accept) { 
+      if (accept) {
+        if(this.alert.accountId !== undefined) {
+          deleteAccount(this.alert.accountId).then(result=>{
+            this.getList(this.query);
+          });
+        }
+      } 
+    },
     getList() {
       smokers(this.query)
         .then((res) => {
