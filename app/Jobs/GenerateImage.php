@@ -86,7 +86,7 @@ class GenerateImage implements ShouldQueue
         // File::ensureDirectoryExists(storage_path($pathToStorage));
         // chown(storage_path($pathToStorage), "apache");
         // chgrp(storage_path($pathToStorage), "apache");
-        //exec('chown -R apache:apache '. storage_path('app/'.$pathToStorage));
+        exec('chown -R apache:apache '. storage_path('app/'.$pathToStorage));
         $img = Image::make(public_path($this->_path))->resize($newwidth, $newheight, function($constraint){
             $constraint->aspectRatio();
         })->save(storage_path('app/'.$pathToStorage . '/' . $imgName));
