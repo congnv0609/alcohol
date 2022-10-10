@@ -54,7 +54,7 @@ class GenerateImage implements ShouldQueue
             case 512: $size = 'medium'; break;
             default: $size = 'small'; break;
         }
-        return sprintf('app/upload/%s/%s', $this->_account, $size);
+        return sprintf('upload/%s/%s', $this->_account, $size);
     }
 
     private function resize_image($path, $w, $h, $crop = FALSE)
@@ -82,11 +82,13 @@ class GenerateImage implements ShouldQueue
         }
 
         $pathToStorage = $this->buildPathToStorage();
-        File::ensureDirectoryExists(storage_path($pathToStorage));
-        chown(storage_path($pathToStorage), "apache");
-        chgrp(storage_path($pathToStorage), "apache");
+        Storage::makeDirectory($pathToStorage);
+        // File::ensureDirectoryExists(storage_path($pathToStorage));
+        // chown(storage_path($pathToStorage), "apache");
+        // chgrp(storage_path($pathToStorage), "apache");
+        // exec('chown -R apache:apache '. storage_path($pathToStorage));
         $img = Image::make(public_path($this->_path))->resize($newwidth, $newheight, function($constraint){
             $constraint->aspectRatio();
-        })->save(storage_path($pathToStorage . '/' . $imgName));
+        })->save(storage_path('app/'.$pathToStorage . '/' . $imgName));
     }
 }
