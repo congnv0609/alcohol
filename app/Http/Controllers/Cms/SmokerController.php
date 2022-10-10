@@ -206,7 +206,7 @@ class SmokerController extends Controller
             return response()->json(['msg'=>'Deleted account'], 200);
         } catch(Exception $ex) {
             DB::rollback();
-            return response()->json(['msg'=>'failed to delete'], 500);
+            return response()->json(['msg'=>$ex->getMessage()], 500);
         }
     }
 
