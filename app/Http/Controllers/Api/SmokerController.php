@@ -94,7 +94,7 @@ class SmokerController extends Controller
         $this->createEma3($ema_arr3);
         Artisan::call('ema:schedule-get');
         Artisan::call('smoker:update-info', ['account_id' => $this->accountId]);
-        MakeReport::dispatch($this->accountId);
+        //MakeReport::dispatch($this->accountId);
         return response()->json($smoker, 200);
         //     }
         // );
@@ -153,7 +153,7 @@ class SmokerController extends Controller
     {
         $data = [
             'account_id' => $old->id,
-            'data_of_change' => date_format(new DateTime('now'), "Y-m-d"),
+            'date_of_change' => date_format(new DateTime('now'), "Y-m-d"),
             'old_wake' => !empty($old->startDate) ? date_format(date_create($old->startDate), "H:i") : null,
             'new_wake' => date_format(date_create($new["startDate"]), "H:i"),
         ];
@@ -191,7 +191,7 @@ class SmokerController extends Controller
             $record = [];
             $record['account_id'] = $this->accountId;
             $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
-            $record['nth_day_current'] = $i + 1;
+            $record['no_of_date'] = $i + 1;
             $data[] = $record;
         }
         return $data;

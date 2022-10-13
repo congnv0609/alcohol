@@ -21,8 +21,6 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
             'ema1',
             'ema2',
             'ema3',
-            'ema4',
-            'ema5',
             'Valid EMA',
             'Incentive',
         ];

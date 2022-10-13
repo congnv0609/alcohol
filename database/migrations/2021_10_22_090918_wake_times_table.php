@@ -17,7 +17,7 @@ class WakeTimesTable extends Migration
         Schema::create('wake_times', function (Blueprint $table) {
             $table->id();
             $table->integer('account_id');
-            $table->date('data_of_change')->nullable();
+            $table->timestamp('date_of_change')->nullable();
             $table->time('old_wake')->nullable();
             $table->time('new_wake')->nullable();
             $table->timestamps();
