@@ -173,7 +173,6 @@ trait EmaTrait
         $this->getEarliestEma2($accountId, $data);
         $this->getEarliestEma3($accountId, $data);
         $next_survey = reset($data);
-
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 // find earlieast ema
@@ -197,9 +196,7 @@ trait EmaTrait
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');
         $list = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
+            ->where('completed', '!=', true)
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -218,9 +215,7 @@ trait EmaTrait
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');$date = date_format(new DateTime(), 'Y-m-d H:i:s');
         $list = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
+            ->where('completed', '!=', true)
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -239,9 +234,7 @@ trait EmaTrait
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');
         $list = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
-            ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
-            })
+            ->where('completed', '!=', true)
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
