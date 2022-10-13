@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\EmaTrait;
 use App\Jobs\MakeReport;
 use App\Models\Incentive;
+use App\Models\Smoker;
 use DateTime;
 use Illuminate\Support\Facades\Artisan;
 
@@ -78,6 +79,11 @@ class EmaController extends Controller
      */
     public function getSurvey()
     {
+        $smoker = Smoker::find($this->accountId);
+        if (empty($smoker)) {
+            return response()->json($smoker, 404);
+        }
+
         $currentEma = $this->getNextSurvey($this->accountId);
         if (empty($currentEma)) {
             return response()->json([], 200);
