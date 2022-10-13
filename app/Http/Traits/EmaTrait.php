@@ -167,7 +167,7 @@ trait EmaTrait
         // $data = $this->getEmaSchedule();
         $data = [];
 
-        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+        // $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
 
         $this->getEarliestEma1($accountId, $data);
         $this->getEarliestEma2($accountId, $data);
@@ -194,7 +194,7 @@ trait EmaTrait
 
     private function getEarliestEma1($accountId, &$data)
     {
-        $date = date_format(new DateTime(), 'Y-m-d H:i:s');
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');
         $list = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
             ->where(function ($query) {
@@ -203,19 +203,8 @@ trait EmaTrait
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
-                $popup_time2 = date_format(new DateTime($ema->popup_time2), 'Y-m-d H:i:s');
-                $popup_time1 = date_format(new DateTime($ema->popup_time1), 'Y-m-d H:i:s');
                 $popup_time = date_format(new DateTime($ema->popup_time), 'Y-m-d H:i:s');
-                if ($popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time1 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time2 >= $date) {
+                if ($popup_time >= $date) {
                     $data[] = $ema;
                     return;
                 }
@@ -226,7 +215,7 @@ trait EmaTrait
 
     private function getEarliestEma2($accountId, &$data)
     {
-        $date = date_format(new DateTime(), 'Y-m-d H:i:s');
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');$date = date_format(new DateTime(), 'Y-m-d H:i:s');
         $list = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
             ->where(function ($query) {
@@ -235,19 +224,8 @@ trait EmaTrait
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
-                $popup_time2 = date_format(new DateTime($ema->popup_time2), 'Y-m-d H:i:s');
-                $popup_time1 = date_format(new DateTime($ema->popup_time1), 'Y-m-d H:i:s');
                 $popup_time = date_format(new DateTime($ema->popup_time), 'Y-m-d H:i:s');
-                if ($popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time1 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time2 >= $date) {
+                if ($popup_time >= $date) {
                     $data[] = $ema;
                     return;
                 }
@@ -258,7 +236,7 @@ trait EmaTrait
 
     private function getEarliestEma3($accountId, &$data)
     {
-        $date = date_format(new DateTime(), 'Y-m-d H:i:s');
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');
         $list = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
             ->where(function ($query) {
@@ -267,19 +245,8 @@ trait EmaTrait
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
-                $popup_time2 = date_format(new DateTime($ema->popup_time2), 'Y-m-d H:i:s');
-                $popup_time1 = date_format(new DateTime($ema->popup_time1), 'Y-m-d H:i:s');
                 $popup_time = date_format(new DateTime($ema->popup_time), 'Y-m-d H:i:s');
-                if ($popup_time2 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time1 >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time >= $date) {
-                    $data[] = $ema;
-                    return;
-                } elseif ($popup_time2 >= $date) {
+                if ($popup_time >= $date) {
                     $data[] = $ema;
                     return;
                 }
