@@ -19,11 +19,14 @@ class CreateSmokersTable extends Migration
             $table->integer('term');
             $table->timestamp('startDate')->nullable();
             $table->timestamp('endDate')->nullable();
-            $table->integer('nth_day_current')->default(0);
-            $table->integer('ema_completed_nth_day')->default(0);
-            $table->integer('incentive_nth_day')->default(0);
-            $table->integer('incentive_total')->default(0);
+            $table->integer('prompt_ema')->default(0);
+            $table->integer('response_ema')->default(0);
+            $table->integer('non_response_ema')->default(0);
+            $table->integer('future_ema')->default(0);
+            $table->decimal('response_rate', $precision = 10, $scale = 8)->nullable();
+            $table->integer('status')->default(0);
             $table->integer('notification')->default(1);
+            $table->string('device_token')->nullable();
             $table->timestamps();
         });
     }

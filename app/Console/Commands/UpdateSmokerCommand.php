@@ -48,7 +48,7 @@ class UpdateSmokerCommand extends Command
         if (!empty($userList)) {
             foreach ($userList as $key => $value) {
                 // $ema = Ema1::where([['date', $date], ['account_id', $value->id]])->first();
-                $incentive = Incentive::where([['nth_day_current', $value->nth_day_current], ['account_id', $value->account_id]])->first();
+                $incentive = Incentive::where([['no_of_date', $value->nth_day_current], ['account_id', $value->account_id]])->first();
                 $incentive_total = Incentive::where([['account_id', $value->account_id], ['incentive', '>=', '15']])->sum('incentive');
                 // if(!empty($ema)) {
                 //     $value->nth_day_current = $ema->nth_day;

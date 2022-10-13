@@ -11,7 +11,7 @@ class WakeTime extends Model
 
     protected $fillable = [
         'account_id',
-        'data_of_change',
+        'date_of_change',
         'old_wake',
         'new_wake',
     ];
