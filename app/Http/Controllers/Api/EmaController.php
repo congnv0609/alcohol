@@ -134,27 +134,8 @@ class EmaController extends Controller
         ];
         $ema = $this->getEmaByQuery($query);
         if (!empty($ema)) {
-            if ($ema->postponded_3 > 0) {
-                $valid = 0;
-                $delayMinutes = $this->getMinuteDelay($ema->postponded_3) + 15;
-                $end_time = date_format(date_add(new Datetime($ema->popup_time2), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
-                if (new DateTime($ema->popup_time2) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
-                    $valid = 1;
-                }
-                return response()->json(['current_ema' => $valid], 200);
-            }
-            if ($ema->postponded_2 > 0) {
-                $valid = 0;
-                $delayMinutes = $this->getMinuteDelay($ema->postponded_2) + 15;
-                $end_time = date_format(date_add(new Datetime($ema->popup_time1), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
-                if (new DateTime($ema->popup_time1) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
-                    $valid = 1;
-                }
-                return response()->json(['current_ema' => $valid], 200);
-            }
             $valid = 0;
-            $delayMinutes = $this->getMinuteDelay($ema->postponded_1) + 15;
-            $end_time = date_format(date_add(new Datetime($ema->popup_time), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+            $end_time = date_format(date_add(new Datetime($ema->popup_time), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');
             if (new DateTime($ema->popup_time) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
                 $valid = 1;
             }
