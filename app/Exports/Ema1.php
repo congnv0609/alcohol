@@ -45,10 +45,9 @@ class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, W
     public function collection()
     {
         
-        $list = DB::Table('smokers')->whereNotNull('smokers.startDate')
+        $list = DB::Table('smokers')
             ->join('ema1s', 'smokers.id', '=', 'ema1s.account_id')
             ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema1s.*')
-            ->whereNotNull('smokers.startDate')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
