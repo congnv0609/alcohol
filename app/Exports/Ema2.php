@@ -20,7 +20,7 @@ class Ema2 extends DefaultValueBinder implements FromCollection, WithHeadings, W
 
     private $_headings = [];
 
-    private $_withoutColumns = ['id', 'account_id', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'delay_time2', 'delay_time3', 'created_at', 'updated_at'];
+    private $_withoutColumns = ['id', 'account_id', 'nth_popup', 'popup_time1', 'popup_time2', 'created_at', 'updated_at'];
 
     /**
      * @return string
@@ -53,10 +53,7 @@ class Ema2 extends DefaultValueBinder implements FromCollection, WithHeadings, W
                 }
                 //
                 if ($key =="date" && !empty($col)) {
-                    $i->{$key} = date_format(date_create($col), 'd/m/Y');
-                }
-                if ($key == "delay_time1" && !empty($col)) {
-                    $i->{$key} = date_format(date_create($col), 'H:i:s');
+                    $i->{$key} = date_format(date_create($col), 'd M Y');
                 }
                 if ($key =="attempt_time" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'H:i:s');
@@ -87,9 +84,6 @@ class Ema2 extends DefaultValueBinder implements FromCollection, WithHeadings, W
                 if (in_array($col, $this->_withoutColumns)) {
                     unset($cols[$key]);
                 } else {
-                    if ($col == 'delay_time1') {
-                        $col = 'popup_time';
-                    }
                     $cols[$key] = ucfirst($col);
                 }
             }

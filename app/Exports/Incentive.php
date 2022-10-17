@@ -42,16 +42,12 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
         //
         $list = DB::Table('smokers')
             ->join('incentives', 'smokers.id', '=', 'incentives.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'incentives.date', 'incentives.ema_1', 'incentives.ema_2', 'incentives.ema_3', 'incentives.ema_4', 'incentives.ema_5', 'incentives.valid_ema', 'incentives.incentive')
-            ->whereNotNull('smokers.startDate')
+            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'incentives.date', 'incentives.ema_1', 'incentives.ema_2', 'incentives.ema_3', 'incentives.valid_ema', 'incentives.incentive')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
                 if ($key == "date" && !empty($col)) {
-                    $i->{$key} = date_format(date_create($col), 'd/m/Y');
-                }
-                if ($key == "incentive" && !empty($col)) {
-                    $i->{$key} = $col < 15 ? 0 : $col;
+                    $i->{$key} = date_format(date_create($col), 'd M Y');
                 }
             }
             return $i;
@@ -63,7 +59,7 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
     {
         return [
             'A' => NumberFormat::FORMAT_TEXT,
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'B' => NumberFormat::FORMAT_DATE_XLSX15,
         ];
     }
 }

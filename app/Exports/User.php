@@ -48,7 +48,6 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     public function collection()
     {
         $list = Smoker::select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')
-        ->whereNotNull('startDate')
         ->get();
         return $list;
     }
@@ -57,8 +56,8 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     {
         return [
             'A'=> NumberFormat::FORMAT_TEXT,
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'B' => NumberFormat::FORMAT_DATE_XLSX15,
+            'C' => NumberFormat::FORMAT_DATE_XLSX15,
             'D'=>NumberFormat::FORMAT_NUMBER,
             'E'=>NumberFormat::FORMAT_NUMBER,
             'F'=>NumberFormat::FORMAT_NUMBER,
