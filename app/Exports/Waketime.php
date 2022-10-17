@@ -37,7 +37,7 @@ class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSiz
     {
         return [
             'A' => NumberFormat::FORMAT_TEXT,
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'B' => NumberFormat::FORMAT_DATE_XLSX15,
         ];
     }
 
@@ -52,12 +52,8 @@ class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSiz
         ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
-                // if (in_array($key, $this->_withoutColumns)) {
-                //     unset($i->$key);
-                // }
-                //
                 if ($key =="date_of_change" && !empty($col)) {
-                    $i->{$key} = date_format(date_create($col), 'd/m/Y');
+                    $i->{$key} = date_format(date_create($col), 'd M Y');
                 }
                 if ($key =="updated_at" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'H:i:s');
