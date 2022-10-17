@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('ema:schedule-get')->dailyAt('03:00');
+        $schedule->command('ema:schedule-get')->daily()->at('03:00');
         // $schedule->command('ema:get-schedule');
         $data = Cache::get('alcohol:schedule');
 
