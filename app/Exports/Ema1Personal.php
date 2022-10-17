@@ -48,7 +48,7 @@ class Ema1Personal implements FromCollection, WithHeadings, WithTitle, WithColum
     }
 
     private function makeList(){
-        $list = DB::Table('smokers')->where('smokers.id', $this->_accountId)->whereNotNull('smokers.startDate')
+        $list = DB::Table('smokers')->where('smokers.id', $this->_accountId)
         ->join('ema1s', 'smokers.id', '=', 'ema1s.account_id')
         ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema1s.*')
         ->get();
@@ -80,7 +80,7 @@ class Ema1Personal implements FromCollection, WithHeadings, WithTitle, WithColum
 
     private function getFirst()
     {
-        $row = DB::Table('smokers')
+        $row = DB::Table('smokers')->where('smokers.id', $this->_accountId)
         ->join('ema1s', 'smokers.id', '=', 'ema1s.account_id')
         ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema1s.*')
         ->first();
