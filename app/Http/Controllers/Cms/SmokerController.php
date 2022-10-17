@@ -98,6 +98,7 @@ class SmokerController extends Controller
         // ->paginate($size)->withQueryString();
 
         $list = DB::table('surveys')
+                ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'smokers.status', 'surveys.*')
                 ->join('smokers', 'smokers.id', '=', 'surveys.account_id');
 
         if ($account > 0) {
