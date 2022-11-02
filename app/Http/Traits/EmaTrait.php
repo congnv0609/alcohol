@@ -30,7 +30,7 @@ trait EmaTrait
         $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('date', $date)
             ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
+                $query->orWhere('completed', 8886)->orWhereNull('completed');
             })
             ->get();
         return $data;
@@ -43,7 +43,7 @@ trait EmaTrait
         $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('date', $date)
             ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
+                $query->orWhere('completed', 8886)->orWhereNull('completed');
             })
             ->get();
         return $data;
@@ -60,7 +60,7 @@ trait EmaTrait
         $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('date', $date)
             ->where(function ($query) {
-                $query->orWhere('completed', false)->orWhereNull('completed');
+                $query->orWhere('completed', 8886)->orWhereNull('completed');
             })
             ->get();
         return $data;
