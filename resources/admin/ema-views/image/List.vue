@@ -112,9 +112,9 @@ export default {
     // this.getList();
   },
   watch: {
-    "query.page": function (val, oldVal) {
-      return this.getList();
-    },
+    // "query.page": function (val, oldVal) {
+    //   return this.getList();
+    // },
   },
   metaInfo() {
     return {
