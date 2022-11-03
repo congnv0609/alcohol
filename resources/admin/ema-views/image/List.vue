@@ -109,7 +109,7 @@ export default {
     };
   },
   mounted() {
-    this.getList();
+    // this.getList();
   },
   watch: {
     "query.page": function (val, oldVal) {
