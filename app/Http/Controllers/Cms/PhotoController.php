@@ -46,8 +46,7 @@ class PhotoController extends Controller
         }   
         $fileName = 'download-photos.zip';
 
-        if ($zip->open(public_path("download/".$fileName), ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
-
+        if ($zip->open(public_path("download/".$fileName), ZipArchive::CREATE)) {
             // $files = File::files(public_path('upload/12345/small'));
             $files = $this->getFilePath($listPhotos);
 
@@ -58,9 +57,9 @@ class PhotoController extends Controller
                 }
                 
             }
-            $zip->close();
-            ob_clean();
         }
+        $zip->close();
+        // ob_clean();
 
         // $headers = array('Content-Type: application/octet-stream', 'Content-Length: ' . filesize($fileName));
         return response()->download(public_path("download/".$fileName))->deleteFileAfterSend(true);
