@@ -27,3 +27,4 @@ package-lock.json
 /public/upload
 /public/download
 .lock
+*.bak
