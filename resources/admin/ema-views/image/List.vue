@@ -133,8 +133,8 @@ export default {
         });
     },
     download(){
-      // this.getArrayAccount();
-      download().then((res)=>{
+      this.getArrayAccount();
+      download({array_id: this.accountId}).then((res)=>{
 
       });
     },
@@ -152,14 +152,14 @@ export default {
         this.$set(item, "_selected", checked);
       });
     },
-    // getArrayAccount() {
-    //   this.accountId = [];
-    //   this.items.forEach((item)=>{
-    //     if(item._selected) {
-    //       this.accountId.push(item.id);
-    //     }
-    //   })
-    // },
+    getArrayAccount() {
+      this.accountId = [];
+      this.items.forEach((item)=>{
+        if(item._selected) {
+          this.accountId.push(item.id);
+        }
+      })
+    },
   },
 };
 </script>

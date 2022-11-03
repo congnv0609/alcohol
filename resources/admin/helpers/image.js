@@ -10,9 +10,9 @@ export function list(query) {
     })
 }
 
-export function download() {
+export function download(images) {
     return new Promise((resolve, reject) => {
-        axios.post('/backend/images/download', { responseType: 'blob'})
+        axios.post('/backend/images/download', images, { responseType: 'blob'})
             .then(response => {
                 const url = URL.createObjectURL(new Blob([response.data], { type: 'application/zip'}))
                 const link = document.createElement('a')
