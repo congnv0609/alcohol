@@ -34,7 +34,7 @@
               </CRow>
             </CForm> -->
           </CCardHeader>
-          <CCardBody>
+          <!-- <CCardBody>
             <CDataTable
               :striped="true"
               :small="false"
@@ -71,15 +71,15 @@
                 </td>
               </template>
             </CDataTable>
-          </CCardBody>
+          </CCardBody> -->
         </CCard>
       </CCol>
     </CRow>
-    <CRow>
+    <!-- <CRow>
       <CCol sm="12">
         <CPagination :active-page.sync="query.page" :pages="last_page" />
       </CCol>
-    </CRow>
+    </CRow> -->
   </div>
 </template>
 <script>
@@ -133,8 +133,8 @@ export default {
         });
     },
     download(){
-      this.getArrayAccount();
-      download({array_id: this.accountId}).then((res)=>{
+      // this.getArrayAccount();
+      download().then((res)=>{
 
       });
     },
@@ -152,14 +152,14 @@ export default {
         this.$set(item, "_selected", checked);
       });
     },
-    getArrayAccount() {
-      this.accountId = [];
-      this.items.forEach((item)=>{
-        if(item._selected) {
-          this.accountId.push(item.id);
-        }
-      })
-    },
+    // getArrayAccount() {
+    //   this.accountId = [];
+    //   this.items.forEach((item)=>{
+    //     if(item._selected) {
+    //       this.accountId.push(item.id);
+    //     }
+    //   })
+    // },
   },
 };
 </script>
