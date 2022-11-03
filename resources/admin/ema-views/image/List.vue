@@ -9,7 +9,12 @@
                 <h3>1.2 Images</h3>
               </CCol>
             </CRow>
-            <CForm inline>
+            <CRow>
+              <CCol>
+                <CButton color="info" @click="download">Download Image</CButton>
+              </CCol>
+            </CRow>
+            <!-- <CForm inline>
               <CRow class="align-items-center">
                 <CInput
                   class="ml-2"
@@ -27,7 +32,7 @@
                   <CButton color="info" @click="download">Download Image</CButton>
                 </CCol>
               </CRow>
-            </CForm>
+            </CForm> -->
           </CCardHeader>
           <CCardBody>
             <CDataTable
