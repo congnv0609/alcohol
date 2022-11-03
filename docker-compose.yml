@@ -1,5 +1,4 @@
-# For more information: https://laravel.com/docs/sail
-version: '3'
+version: "2"
 services:
     laravel.test:
         build:
@@ -65,3 +64,4 @@ volumes:
         driver: local
     sail-redis:
         driver: local
+
