@@ -34,6 +34,9 @@ class PhotoController extends Controller
         // $listPhotos = UploadPhoto::whereIn('id', $imageList)->get();
         $listPhotos = UploadPhoto::all();
 
+        if(empty($listPhotos)) {
+            return response()->json(['msg'=>'No any file to download', 404]);
+        }
 
         $zip = new ZipArchive;
 
