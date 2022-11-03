@@ -29,9 +29,11 @@ class PhotoController extends Controller
     }
 
     public function download() {
-        
-        $imageList = request()->collect('array_id');
-        $listPhotos = UploadPhoto::whereIn('id', $imageList)->get();
+
+        // $imageList = request()->collect('array_id');
+        // $listPhotos = UploadPhoto::whereIn('id', $imageList)->get();
+        $listPhotos = UploadPhoto::all();
+
 
         $zip = new ZipArchive;
 

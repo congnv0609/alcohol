@@ -26,3 +26,4 @@ package-lock.json
 /storage/app/upload
 /public/upload
 /public/download
+.lock
