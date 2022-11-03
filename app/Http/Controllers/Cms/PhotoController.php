@@ -40,7 +40,7 @@ class PhotoController extends Controller
         $path = public_path('download');
 
         if (!File::exists($path)) {
-            File::makeDirectory($path, 0777, true, true);
+            File::makeDirectory($path, 0777, true);
             // exec("chown -R root:apache " . $path);
         }   
         $fileName = 'download-photos.zip';
