@@ -47,7 +47,7 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     */
     public function collection()
     {
-        $list = Smoker::select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')
+        $list = Smoker::select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), DB::raw('if(smokers.status > 0, "(Delete)", "") as status'), 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')
         ->get();
         return $list;
     }
@@ -69,7 +69,7 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     public function map($smoker): array
     {
         return [
-            $smoker->user_id,
+            $smoker->user_id.$smoker->status,
             Date::dateTimeToExcel(date_create($smoker->startDate)),
             Date::dateTimeToExcel(date_create($smoker->endDate)),
             $smoker->prompt_ema,
