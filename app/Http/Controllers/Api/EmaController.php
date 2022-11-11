@@ -92,9 +92,9 @@ class EmaController extends Controller
             'survey_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 
             'current_ema' => $currentEma['current_ema'], 
             'ema' => $currentEma['nth_ema'], 
-            'popup_time' => $currentEma['popup_time'], 
-            'popup_time1' => $currentEma['popup_time1'], 
-            'popup_time2' => $currentEma['popup_time2'], 
+            'popup_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 
+            'popup_time1' => date_format(new Datetime($currentEma['popup_time1']), 'Y-m-d H:i:s'), 
+            'popup_time2' => date_format(new Datetime($currentEma['popup_time2']), 'Y-m-d H:i:s'), 
             'nth_day' => $currentEma['nth_day'], 
             'nth_popup' => $currentEma['nth_popup']
         ], 200);
