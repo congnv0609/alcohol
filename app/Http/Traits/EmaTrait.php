@@ -212,7 +212,7 @@ trait EmaTrait
 
     private function getEarliestEma2($accountId, &$data)
     {
-        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');$date = date_format(new DateTime(), 'Y-m-d H:i:s');
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("30 minutes")), 'Y-m-d H:i:s');
         $list = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
             ->where('account_id', $accountId)
             ->where('completed', '!=', true)
