@@ -79,7 +79,7 @@ php artisan scribe:generate
 php artisan storage:link
 php artisan ema:schedule-get
 
-systemctl restart supervisord.service
+systemctl restart supervisord
 
 echo "Starting build SPAs in $PWD"
 
