@@ -44,8 +44,8 @@ class PhotoController extends Controller
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 0777, true);
-            exec("chmod -R 775 " . $path);
-            exec("chown -R www-data:www-data " . $path);
+            // exec("chmod -R 775 " . $path);
+            // exec("chown -R www-data:www-data " . $path);
         }   
         $fileName = 'download-photos.zip';
 
