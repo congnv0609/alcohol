@@ -39,7 +39,7 @@
               :items-per-page="query.size"
             >
               <template #user_id="{ item }">
-                <td>{{ item.account }}</br><CButton v-if="item.status" color="danger" @click="deleteUser(item.id)" variant="ghost">(Delete)</CButton></td>
+                <td>{{ item.account }}</br><CButton v-if="item.status" color="danger" @click="deleteUser(item.account_id)" variant="ghost">(Delete)</CButton></td>
               </template>
               <template #start_date="{ item }">
                 <td>{{ item.start_date | moment("YYYY-MM-DD") }}</td>

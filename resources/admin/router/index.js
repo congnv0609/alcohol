@@ -81,7 +81,7 @@ function configRoutes () {
   return [
     {
       path: '/',
-      redirect: 'smokers',
+      redirect: 'export',
       name: 'Home',
       component: TheContainer,
       meta: { requiresAuth: true },
