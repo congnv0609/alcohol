@@ -92,8 +92,8 @@ function configRoutes () {
           component: Dashboard
         },
         {
-          path: 'smokers',
-          redirect: 'smokers/list',
+          path: 'users',
+          redirect: 'users/list',
           component: {
             render(c) { return c('router-view') }
           },
@@ -192,32 +192,32 @@ function configRoutes () {
           name: 'Widgets',
           component: Widgets
         },
-        {
-          path: 'users',
-          meta: {
-            label: 'Users'
-          },
-          component: {
-            render(c) {
-              return c('router-view')
-            }
-          },
-          children: [
-            {
-              path: '',
-              name: 'Users',
-              component: Users
-            },
-            {
-              path: ':id',
-              meta: {
-                label: 'User Details'
-              },
-              name: 'User',
-              component: User
-            }
-          ]
-        },
+        // {
+        //   path: 'users',
+        //   meta: {
+        //     label: 'Users'
+        //   },
+        //   component: {
+        //     render(c) {
+        //       return c('router-view')
+        //     }
+        //   },
+        //   children: [
+        //     {
+        //       path: '',
+        //       name: 'Users',
+        //       component: Users
+        //     },
+        //     {
+        //       path: ':id',
+        //       meta: {
+        //         label: 'User Details'
+        //       },
+        //       name: 'User',
+        //       component: User
+        //     }
+        //   ]
+        // },
         {
           path: 'base',
           redirect: '/base/cards',
