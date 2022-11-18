@@ -15,6 +15,7 @@ class Export implements WithMultipleSheets
     public function sheets(): array
     {
         set_time_limit(0);
+        ini_set('memory_limit', '-1');
         $sheets = [];
 
         $sheets[] = new User();
