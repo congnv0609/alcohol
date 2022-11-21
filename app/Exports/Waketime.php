@@ -48,7 +48,7 @@ class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSiz
     {
         $list = DB::Table('smokers')->whereNotNull('startDate')
         ->join('wake_times', 'smokers.id', '=', 'wake_times.account_id')
-        ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'wake_times.date_of_change', 'wake_times.updated_at', 'wake_times.old_wake', 'wake_times.new_wake')
+        ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'wake_times.date_of_change', 'wake_times.updated_at', 'wake_times.old_wake', 'wake_times.new_wake')
         ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {

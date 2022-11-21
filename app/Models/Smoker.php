@@ -39,7 +39,7 @@ class Smoker extends Model
 
     public function getAccountAttribute()
     {
-        if ($this->term > 1) {
+        if ($this->term > 0) {
             return $this->attributes['account'] . "-" . $this->attributes['term'];
         } else {
             return $this->attributes['account'];
