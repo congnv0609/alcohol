@@ -51,7 +51,7 @@ class Ema2Personal implements FromCollection, WithHeadings, WithTitle, WithColum
     {
         $list = DB::Table('smokers')->where('smokers.id', $this->_accountId)->whereNotNull('startDate')
             ->join('ema2s', 'smokers.id', '=', 'ema2s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema2s.*')
+            ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema2s.*')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
@@ -83,7 +83,7 @@ class Ema2Personal implements FromCollection, WithHeadings, WithTitle, WithColum
     {
         $row = DB::Table('smokers')->where('smokers.id', $this->_accountId)->whereNotNull('startDate')
             ->join('ema2s', 'smokers.id', '=', 'ema2s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema2s.*')
+            ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema2s.*')
             ->first();
         if (!empty($row)) {
             $cols = array_keys(get_object_vars($row));

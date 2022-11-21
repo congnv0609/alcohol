@@ -47,7 +47,7 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     */
     public function collection()
     {
-        $list = Smoker::select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), DB::raw('if(smokers.status > 0, "(Delete)", "") as status'), 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')
+        $list = Smoker::select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), DB::raw('if(smokers.status > 0, "(Delete)", "") as status'), 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')
         ->whereNotNull('startDate')
         ->get();
         return $list;

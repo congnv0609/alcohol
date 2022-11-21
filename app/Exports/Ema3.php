@@ -44,7 +44,7 @@ class Ema3 extends DefaultValueBinder implements FromCollection, WithHeadings, W
     {
         $list = DB::Table('smokers')->whereNotNull('startDate')
             ->join('ema3s', 'smokers.id', '=', 'ema3s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema3s.*')
+            ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema3s.*')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
@@ -76,7 +76,7 @@ class Ema3 extends DefaultValueBinder implements FromCollection, WithHeadings, W
     {
         $row = DB::Table('smokers')->whereNotNull('startDate')
             ->join('ema3s', 'smokers.id', '=', 'ema3s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema3s.*')
+            ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema3s.*')
             ->first();
         if (!empty($row)) {
             $cols = array_keys(get_object_vars($row));
