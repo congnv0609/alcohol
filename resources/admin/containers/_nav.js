@@ -12,12 +12,12 @@ export default [
       //     text: 'NEW'
       //   }
       // },
-      {
-        _name: 'CSidebarNavItem',
-        name: '1.1 User Survey Status',
-        to: '/users',
-        icon: 'cil-people'
-      },
+      // {
+      //   _name: 'CSidebarNavItem',
+      //   name: '1.1 User Survey Status',
+      //   to: '/users',
+      //   icon: 'cil-people'
+      // },
       {
         _name: 'CSidebarNavItem',
         name: '1.2 Images',
