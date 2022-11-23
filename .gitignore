@@ -28,3 +28,4 @@ package-lock.json
 .zip
 .lock
 *.bak
+public/mix-manifest.json
