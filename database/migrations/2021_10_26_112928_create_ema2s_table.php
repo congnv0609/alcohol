@@ -201,7 +201,6 @@ class CreateEma2sTable extends Migration
             $table->integer('Q13_e')->nullable()->default(8888);
             $table->integer('Q13_e_num')->nullable()->default(8886);
             $table->integer('Q13_f')->nullable()->default(8888);
-            $table->integer('Q13_f_num')->nullable()->default(8886);
             $table->integer('Q13_g')->nullable()->default(8888);
             $table->integer('Q13_g_num')->nullable()->default(8886);
             $table->integer('Q13_h')->nullable()->default(8888);
