@@ -132,29 +132,29 @@ trait EmaTrait
             case 1: {
                     switch ($nth_ema) {
                         case 1: {
-                                $title = "1st EMA (1st app push alert)";
-                                $msg = "Alcohol 邀請你做今日第1次問卷, 請你在30分鐘內完成！";
+                                $title = "飲酒快照";
+                                $msg = "飲酒快照邀請你做今日第1次問卷, 請你在30分鐘內完成！";
                                 break;
                             }
                         case 2: {
-                                $title = "2nd EMA (1st app push alert)";
-                                $msg = "Alcohol 邀請你做今日第2次問卷, 請你在30分鐘內完成！";
+                                $title = "飲酒快照";
+                                $msg = "飲酒快照邀請你做今日第2次問卷, 請你在30分鐘內完成！";
                                 break;
                             }
                         default:
-                            $title = "3rd EMA (1st app push alert)";
-                            $msg = "Alcohol 邀請你做今日最後一次問卷, 請你在30分鐘內完成！";
+                            $title = "飲酒快照";
+                            $msg = "飲酒快照邀請你做今日最後一次問卷, 請你在30分鐘內完成！";
                             break;
                     }
                     break;
                 }
             case 2: {
-                $title = "2nd app push alert";
+                $title = "飲酒快照";
                 $msg = "最後15分鐘答題,  放棄填寫會損失是次現金禮券！";
                 break;
             }
             case 3: {
-                $title = "3rd app push alert";
+                $title = "飲酒快照";
                 $msg = "最後5分鐘答題,  放棄填寫會損失是次現金禮券！";
                 break;
             }
