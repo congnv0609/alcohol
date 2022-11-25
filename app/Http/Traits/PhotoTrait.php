@@ -13,12 +13,12 @@ trait PhotoTrait
         if (UploadPhoto::where([['account_id', $photo->account_id], ['date', $photo->date], ['photo_number', $photo->photo_number]])->exists()) {
             $photo->photo_number++;
             $date = date_format(new DateTime(), 'Ymd');
-            $fileName = sprintf('%s_%8s_%2s_%4s_%s.%s', $photo->account, $date, $photo->survey_number, $photo->question_number, $photo->photo_number, $extension);
+            $fileName = sprintf('%s_%8s_%02d_%04d_%d.%s', $photo->account, $date, $photo->survey_number, $photo->question_number, $photo->photo_number, $extension);
             $photo->photo_name = $fileName;
             $this->newPhoto($photo, $extension);
         } else {
             $date = date_format(new DateTime(), 'Ymd');
-            $fileName = sprintf('%s_%8s_%2s_%4s_%s.%s', $photo->account, $date, $photo->survey_number, $photo->question_number, $photo->photo_number, $extension);
+            $fileName = sprintf('%s_%8s_%02d_%04d_%d.%s', $photo->account, $date, $photo->survey_number, $photo->question_number, $photo->photo_number, $extension);
             $photo->photo_name = $fileName;
             $photo->save();
             return $photo;
@@ -29,7 +29,7 @@ trait PhotoTrait
         $account_id = request()->header('accountId');
         $surveyNo = request()->survey_number ?? '00';
         $questionNo = request()->question_number ?? "0000";
-        $account = $smoker->term > 1 ? sprintf('%d-%d', $smoker->account, $smoker->term) : $smoker->account;
+        $account = $smoker->term > 0 ? sprintf('%d-%d', $smoker->account, $smoker->term) : $smoker->account;
         $photo = new UploadPhoto();
         $photo->account_id = $account_id;
         $photo->account = (string)$account;

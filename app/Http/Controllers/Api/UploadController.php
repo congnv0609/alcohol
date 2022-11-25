@@ -24,7 +24,7 @@ class UploadController extends Controller
      * @header accountId integer required
      * @bodyParam photos[] file required array photo
      * @bodyParam survey_number(default 00)
-     * @bodyParam question_number(default 0000)
+     * @bodyParam question_number(2 number) and no of ad(2 number) (default 0000)
      * 
      * 
      */
@@ -39,7 +39,7 @@ class UploadController extends Controller
             if(empty($smoker)){
                 return response()->json(['msg: User not found'],404);
             }
-            $account = $smoker->term > 1? sprintf('%d-%d',$smoker->account, $smoker->term):$smoker->account;
+            $account = $smoker->term > 0? sprintf('%d-%d',$smoker->account, $smoker->term):$smoker->account;
             $folder = sprintf('upload/%s/original', $account);
             //upload files
             $photos = request()->file('photos');
