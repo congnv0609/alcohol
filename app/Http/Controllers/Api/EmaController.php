@@ -27,8 +27,9 @@ class EmaController extends Controller
      * id [1=EMA1, 2=EMA2, 3=EMA3, 4=EMA4, 5=EMA5]
      * @header accountId integer required
      * @bodyParam date YYYY-MM-DD required 
-     * @bodyParam completed integer [1=completed, default 0 incompleted]
+     * @bodyParam completed integer [1=completed, default 8886 incompleted]
      * @bodyParam time_taken integer taken time to do survey, maximum 15mins
+     * @bodyParam true/false values should be 1/0
      * @authenticated
      * 
      */
