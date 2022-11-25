@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Smoker;
+use stdClass;
 
 class LoginController extends Controller
 {
@@ -60,10 +61,9 @@ class LoginController extends Controller
         }
 
         $term = Smoker::where('account', $account)->max('term');
-        $smoker = new Smoker();
+        $smoker = new stdClass();
         $smoker->account = (string)$account;
         $smoker->term = $term??0;
-        
         $this->newAccount($smoker);
 
         return response()->json($smoker, 200);
