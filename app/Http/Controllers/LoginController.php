@@ -64,9 +64,8 @@ class LoginController extends Controller
         $smoker = new stdClass();
         $smoker->account = (string)$account;
         $smoker->term = $term??0;
-        $this->newAccount($smoker);
-
-        return response()->json($smoker, 200);
+        $user = $this->newAccount($smoker);
+        return response()->json($user, 200);
     }
 
     /**
