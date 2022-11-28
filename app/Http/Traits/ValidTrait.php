@@ -16,11 +16,11 @@ trait ValidTrait
         }
     }
 
-    public function newAccount(&$account)
+    public function newAccount($account)
     {
         if (Smoker::where([['account', $account->account], ['term', $account->term]])->exists()) {
             $account->term++;
-            $this->newAccount($account);
+            return $this->newAccount($account);
         } else {
             $user = Smoker::create((array)$account);
             return $user;
