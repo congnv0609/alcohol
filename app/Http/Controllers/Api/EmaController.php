@@ -91,6 +91,7 @@ class EmaController extends Controller
         }
         return response()->json([
             'survey_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 
+            'date' => $currentEma['date'],
             'current_ema' => $currentEma['current_ema'], 
             'ema' => $currentEma['nth_ema'], 
             'popup_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 
