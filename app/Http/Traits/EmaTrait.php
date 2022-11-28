@@ -27,7 +27,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
+        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'completed')
             ->where('date', $date)
             ->where(function ($query) {
                 $query->orWhere('completed', 8886)->orWhereNull('completed');
@@ -40,7 +40,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
+        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'completed')
             ->where('date', $date)
             ->where(function ($query) {
                 $query->orWhere('completed', 8886)->orWhereNull('completed');
@@ -57,7 +57,7 @@ trait EmaTrait
         if ($time >= strtotime("00:00:00") && $time < strtotime("03:00:00")) {
             $date = date_sub(new DateTime(), date_interval_create_from_date_string("1 days"));
         }
-        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2')
+        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'completed')
             ->where('date', $date)
             ->where(function ($query) {
                 $query->orWhere('completed', 8886)->orWhereNull('completed');
