@@ -65,7 +65,7 @@ class ReportUser extends Command
         $data['prompt_ema'] = $this->countEmaByPrompt($accountId);
         $data['response_ema'] = $this->countEmaByCompleted($accountId);
         $data['non_response_ema'] = ($data['prompt_ema'] - $data['response_ema']) > 0 ? $data['prompt_ema'] - $data['response_ema']: 0;
-        $data['future_ema'] = 35 - $data['prompt_ema'];
+        $data['future_ema'] = 63 - $data['prompt_ema'];
         $data['response_rate'] = $data['prompt_ema'] > 0 ? $data['response_ema'] / $data['prompt_ema'] : 0;
         return $data;
     }
