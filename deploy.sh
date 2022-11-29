@@ -81,6 +81,6 @@ php artisan ema:schedule-get
 
 systemctl restart supervisord
 
-echo "Starting build SPAs in $PWD"
+#echo "Starting build SPAs in $PWD"
 
-npm run production
+#npm run production
