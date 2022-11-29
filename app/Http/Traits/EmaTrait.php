@@ -40,6 +40,10 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
+        $time = date_format(new DateTime(), 'H:i:s');
+        if ($time >= strtotime("00:00:00") && $time < strtotime("03:00:00")) {
+            $date = date_sub(new DateTime(), date_interval_create_from_date_string("1 days"));
+        }
         $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'completed')
             ->where('date', $date)
             ->where(function ($query) {
@@ -317,6 +321,39 @@ trait EmaTrait
             foreach ($data as $item) {
                 Survey::create($item);
             }
+        }
+    }
+
+    public function updateReminder(array $ema) {
+        switch($ema['nth_ema']) {
+            case 1:
+                $emaModel = Ema1::where('account_id', $ema['account_id'])->where('date', $ema['date'])->first();
+                if(!empty($emaModel) && $ema['nth_popup']==2) {
+                     $emaModel->update(['2nd_reminder'=>8886]);
+                }
+                if(!empty($emaModel) && $ema['nth_popup']==3) {
+                    $emaModel->update(['3rd_reminder' => 8886]);
+                }
+                break;
+            case 2:
+                $emaModel = Ema2::where('account_id', $ema['account_id'])->where('date', $ema['date'])->first();
+                if(!empty($emaModel) && $ema['nth_popup']==2) {
+                    $emaModel->update(['2nd_reminder' => 8886]);
+                }
+                if(!empty($emaModel) && $ema['nth_popup']==3) {
+                    $emaModel->update(['3rd_reminder' => 8886]);
+                }
+                break;
+            case 3:
+                $emaModel = Ema3::where('account_id', $ema['account_id'])->where('date', $ema['date'])->first();
+                if(!empty($emaModel) && $ema['nth_popup']==2) {
+                    $emaModel->update(['2nd_reminder' => 8886]);
+                }
+                if(!empty($emaModel) && $ema['nth_popup']==3) {
+                    $emaModel->update(['3rd_reminder' => 8886]);
+                }
+                break;
+
         }
     }
 }

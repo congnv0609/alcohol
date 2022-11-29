@@ -53,6 +53,7 @@ class EmaPrompt extends Notification
     {
         $ema = $this->getPopupInfo($this->_ema);
         $info = $this->getPromptMessage($ema);
+        $this->updateReminder($ema);
         UpdateCountPush::dispatch($ema);
         $sound = $this->_user->notification == 1 ? "default" : null;
         return FcmMessage::create()
