@@ -36,7 +36,9 @@ class EmaController extends Controller
     public function update($id)
     {
         $data = request()->all();
-        $data['submit_time'] = new DateTime();
+        if(!isset($data['1st_reminder']) && !isset($data['2nd_reminder']) && !isset($data['3rd_reminder'])) {
+            $data['submit_time'] = new DateTime();
+        }
         $data['account_id'] = $this->accountId;
         $ema = $this->getEma($id, $data);
         if (empty($ema)) {

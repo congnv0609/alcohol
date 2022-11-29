@@ -8,17 +8,19 @@ use DateTime;
 trait PhotoTrait
 {
 
-    public function newPhoto($photo, $extension)
+    public function newPhoto($photo, $index, $extension)
     {
         if (UploadPhoto::where([['account_id', $photo->account_id], ['date', $photo->date], ['photo_number', $photo->photo_number]])->exists()) {
             $photo->photo_number++;
             $date = date_format(new DateTime(), 'Ymd');
-            $fileName = sprintf('%s_%8s_%02d_%04d_%d.%s', $photo->account, $date, $photo->survey_number, $photo->question_number, $photo->photo_number, $extension);
+            $question_number = sprintf("%02d%02d", $photo->question_number, $index);
+            $fileName = sprintf('%s_%8s_%02d_%d_%d.%s', $photo->account, $date, $photo->survey_number, $question_number, $photo->photo_number, $extension);
             $photo->photo_name = $fileName;
-            $this->newPhoto($photo, $extension);
+            $this->newPhoto($photo, $index, $extension);
         } else {
             $date = date_format(new DateTime(), 'Ymd');
-            $fileName = sprintf('%s_%8s_%02d_%04d_%d.%s', $photo->account, $date, $photo->survey_number, $photo->question_number, $photo->photo_number, $extension);
+            $question_number = sprintf("%02d%02d", $photo->question_number, $index);
+            $fileName = sprintf('%s_%8s_%02d_%04d_%d.%s', $photo->account, $date, $photo->survey_number, $question_number, $photo->photo_number, $extension);
             $photo->photo_name = $fileName;
             $photo->save();
             return $photo;
