@@ -48,7 +48,7 @@ class UploadController extends Controller
                 //photos data
                 $extension = $photo->extension();
                 $photo = $this->makeData($smoker);
-                $this->newPhoto($photo, $extension);
+                $this->newPhoto($photo, $key+1, $extension);
                 $path = request()->file('photos')[$key]->storeAs($folder, $photo->photo_name);
                 $arrayPath[] = $path;
                 if (request()->file('photos')[$key]->isValid()) {
