@@ -110,14 +110,14 @@ class EmaController extends Controller
         $incentive->{$ema} = $data["completed"];
         $incentive->valid_ema = $incentive->ema_1 + $incentive->ema_2 + $incentive->ema_3;
         $incentive->incentive = $incentive->valid_ema * 5;
-        $incentive->complaince_rate = $incentive->valid_ema/63;
+        $incentive->complaince_rate = $incentive->valid_ema/63*100;
         $incentive->additional_incentive = $incentive->complaince_rate>=85?100:0;
         $incentive->total_incentive = $incentive->incentive + $incentive->additional_incentive;
         return $incentive->save();
     }
 
     /**
-     * Check ema validat time
+     * Check ema validate time
      * @header accountId integer required
      * @authenticated
      * @queryParam nth_ema integer required

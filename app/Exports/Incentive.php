@@ -70,6 +70,9 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
                 if ($key == "date" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'd M Y');
                 }
+                if ($key == "complaince_rate" && !empty($col)) {
+                    $i->{$key} = sprintf("%d\%", $col);
+                }
             }
             return $i;
         });
