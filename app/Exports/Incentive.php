@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use NumberFormatter;
 
 class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithStrictNullComparison
 {
@@ -17,12 +18,16 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
     {
         return [
             'user_id',
+            'No of date',
             'date',
             'ema1',
             'ema2',
             'ema3',
             'Valid EMA',
             'Incentive',
+            'Complaince rate',
+            'Additional incentive',
+            'Total incentive'
         ];
     }
 
@@ -42,10 +47,26 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
         //
         $list = DB::Table('smokers')->whereNotNull('startDate')
             ->join('incentives', 'smokers.id', '=', 'incentives.account_id')
-            ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'incentives.date', 'incentives.ema_1', 'incentives.ema_2', 'incentives.ema_3', 'incentives.valid_ema', 'incentives.incentive')
+            ->select(DB::raw('if(smokers.term > 0, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 
+                'incentives.no_of_date', 
+                'incentives.date', 
+                'incentives.ema_1', 
+                'incentives.ema_2', 
+                'incentives.ema_3', 
+                'incentives.valid_ema', 
+                'incentives.incentive', 
+                'incentives.complaince_rate',
+                'incentives.additional_incentive',
+                'incentives.total_incentive'
+            )
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
+                if ($key == "no_of_date" && !empty($col)) {
+                    $locale = 'en_US';
+                    $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
+                    $i->{$key} = $nf->format($col);
+                }
                 if ($key == "date" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'd M Y');
                 }
