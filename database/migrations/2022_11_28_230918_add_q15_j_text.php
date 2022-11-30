@@ -15,7 +15,7 @@ class AddQ15JText extends Migration
     {
         Schema::table('ema3s', function (Blueprint $table) {
             $table->after('Q15_j', function ($table) {
-                $table->integer('Q15_j_text')->nullable()->default(8888);
+                $table->string('Q15_j_text')->nullable()->default(8888);
             });
         });
     }
