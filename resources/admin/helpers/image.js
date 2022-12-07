@@ -23,6 +23,7 @@ export function download(images) {
                 )
                 document.body.appendChild(link)
                 link.click()
+                resolve(response)
             })
             .catch(err => {
                 reject(err)

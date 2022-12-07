@@ -7,7 +7,10 @@
     </CRow>
     <CRow>
       <CCol>
-        <CButton color="info" @click="exportData">Export</CButton>
+        <CButton color="info" @click="exportData" v-if="!status" :disabled="status">Export</CButton>
+        <CButton color="info" v-if="status" :disabled="status">
+          <CSpinner component="span" size="sm" aria-hidden="true"/>Loading...
+        </CButton>
       </CCol>
     </CRow>
   </div>
@@ -19,6 +22,7 @@ export default {
   data() {
     return {
       caption: "2 Export Report",
+      status: false
     };
   },
   mounted() {},
@@ -30,7 +34,12 @@ export default {
   },
   methods: {
     exportData() {
-      exportData();
+      this.status = true
+      exportData().then((res)=>{
+          // this.status = false
+      }).catch((err) => {
+          console.log(err)
+        }).finally(() => this.status = false)
     },
   },
 };
