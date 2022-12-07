@@ -11,7 +11,10 @@
             </CRow>
             <CRow>
               <CCol>
-                <CButton color="info" @click="download">Download Image</CButton>
+                <CButton color="info" @click="download" v-if="!status" :disabled="status">Download Image</CButton>
+                <CButton color="info" v-if="status" :disabled="status">
+          <CSpinner component="span" size="sm" aria-hidden="true"/>Loading...
+        </CButton>
               </CCol>
             </CRow>
             <!-- <CForm inline>
@@ -89,6 +92,7 @@ export default {
   data() {
     return {
       last_page: 1,
+      status: false,
       query: {
         account: undefined,
         photo_name: undefined,
@@ -133,9 +137,11 @@ export default {
         });
     },
     download(){
+      this.status = true
       this.getArrayAccount();
       download({array_id: this.accountId}).then((res)=>{
-
+      }).finally(()=>{
+        this.status = false
       });
     },
     rowClicked(item, index, column, e) {
