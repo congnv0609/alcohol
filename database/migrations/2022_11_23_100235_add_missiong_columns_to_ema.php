@@ -15,19 +15,19 @@ class AddMissiongColumnsToEma extends Migration
     {
         Schema::table('ema1s', function (Blueprint $table) {
             $table->after('Q13_f', function ($table) {
-                $table->integer('Q13_f_num')->nullable()->default(8886);
+                $table->decimal('Q13_f_num')->nullable()->default(8886);
             });
         });
 
         Schema::table('ema2s', function (Blueprint $table) {
             $table->after('Q13_f', function ($table) {
-                $table->integer('Q13_f_num')->nullable()->default(8886);
+                $table->decimal('Q13_f_num')->nullable()->default(8886);
             });
         });
 
         Schema::table('ema3s', function (Blueprint $table) {
             $table->after('Q13_f', function ($table) {
-                $table->integer('Q13_f_num')->nullable()->default(8886);
+                $table->decimal('Q13_f_num')->nullable()->default(8886);
             });
         });
     }

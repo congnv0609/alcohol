@@ -191,21 +191,21 @@ class CreateEma1sTable extends Migration
 
             $table->integer('Q13')->nullable()->default(8886);
             $table->integer('Q13_a')->nullable()->default(8886);
-            $table->integer('Q13_a_num')->nullable()->default(8886);
+            $table->decimal('Q13_a_num')->nullable()->default(8886);
             $table->integer('Q13_b')->nullable()->default(8886);
-            $table->integer('Q13_b_num')->nullable()->default(8886);
+            $table->decimal('Q13_b_num')->nullable()->default(8886);
             $table->integer('Q13_c')->nullable()->default(8886);
-            $table->integer('Q13_c_num')->nullable()->default(8886);
+            $table->decimal('Q13_c_num')->nullable()->default(8886);
             $table->integer('Q13_d')->nullable()->default(8886);
-            $table->integer('Q13_d_num')->nullable()->default(8886);
+            $table->decimal('Q13_d_num')->nullable()->default(8886);
             $table->integer('Q13_e')->nullable()->default(8886);
-            $table->integer('Q13_e_num')->nullable()->default(8886);
+            $table->decimal('Q13_e_num')->nullable()->default(8886);
             $table->integer('Q13_f')->nullable()->default(8886);
             $table->integer('Q13_g')->nullable()->default(8886);
-            $table->integer('Q13_g_num')->nullable()->default(8886);
+            $table->decimal('Q13_g_num')->nullable()->default(8886);
             $table->integer('Q13_h')->nullable()->default(8886);
             $table->string('Q13_h_text')->nullable()->default(8886);
-            $table->integer('Q13_h_num')->nullable()->default(8886);
+            $table->decimal('Q13_h_num')->nullable()->default(8886);
             $table->integer('Q13_i')->nullable()->default(8886);
 
             $table->integer('Q14')->nullable()->default(8886);
