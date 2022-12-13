@@ -39,7 +39,7 @@ class UploadController extends Controller
             if(empty($smoker)){
                 return response()->json(['msg: User not found'],404);
             }
-            $account = $smoker->term > 0? sprintf('%d-%d',$smoker->account, $smoker->term):$smoker->account;
+            $account = $smoker->term > 0? sprintf('%05d-%d',$smoker->account, $smoker->term):$smoker->account;
             $folder = sprintf('upload/%s/original', $account);
             //upload files
             $photos = request()->file('photos');
