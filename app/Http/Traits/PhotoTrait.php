@@ -37,7 +37,7 @@ trait PhotoTrait
         $account_id = request()->header('accountId');
         $surveyNo = request()->survey_number ?? '00';
         $questionNo = request()->question_number ?? 0;
-        $account = $smoker->term > 0 ? sprintf('%d-%d', $smoker->account, $smoker->term) : $smoker->account;
+        $account = $smoker->term > 0 ? sprintf('%05d-%d', $smoker->account, $smoker->term) : sprintf('%05d', $smoker->account);
         $photo = new UploadPhoto();
         $photo->account_id = $account_id;
         $photo->account = (string)$account;
