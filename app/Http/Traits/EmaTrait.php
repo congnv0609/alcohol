@@ -40,9 +40,11 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $time = date_format(new DateTime(), 'H:i:s');
-        if ($time >= strtotime("00:00:00") && $time < strtotime("03:00:00")) {
-            $date = date_sub(new DateTime(), date_interval_create_from_date_string("1 days"));
+        $begin = date_format(new DateTime(), 'Y-m-d 00:00:00');
+        $end = date_format(new DateTime(), 'Y-m-d 03:00:00');
+        $current = date_format(new DateTime(), 'Y-m-d H:i:s');
+        if ($current >= $begin && $current < $end) {
+            $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("1 days")), 'Y-m-d');
         }
         $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'completed')
             ->where('date', $date)
@@ -57,9 +59,11 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $time = date_format(new DateTime(), 'H:i:s');
-        if ($time >= strtotime("00:00:00") && $time < strtotime("03:00:00")) {
-            $date = date_sub(new DateTime(), date_interval_create_from_date_string("1 days"));
+        $begin = date_format(new DateTime(), 'Y-m-d 00:00:00');
+        $end = date_format(new DateTime(), 'Y-m-d 03:00:00');
+        $current = date_format(new DateTime(), 'Y-m-d H:i:s');
+        if ($current >= $begin && $current < $end) {
+            $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("1 days")),'Y-m-d');
         }
         $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'completed')
             ->where('date', $date)

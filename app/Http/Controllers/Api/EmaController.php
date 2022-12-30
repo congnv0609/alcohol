@@ -24,7 +24,7 @@ class EmaController extends Controller
 
     /**
      * update an EMA and date values, use form url encoded
-     * id [1=EMA1, 2=EMA2, 3=EMA3, 4=EMA4, 5=EMA5]
+     * id [1=EMA1, 2=EMA2, 3=EMA3]
      * @header accountId integer required
      * @bodyParam date YYYY-MM-DD required 
      * @bodyParam completed integer [1=completed, default 8886 incompleted]
@@ -55,7 +55,7 @@ class EmaController extends Controller
 
     /**
      * set Attempt Time
-     * id [1=EMA1, 2=EMA2, 3=EMA3, 4=EMA4, 5=EMA5]
+     * id [1=EMA1, 2=EMA2, 3=EMA3]
      * @header accountId integer required
      * @bodyParam date YYYY-MM-DD required 
      * @authenticated
